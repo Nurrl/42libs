@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2018/12/18 13:55:27 by lroux            ###   ########.fr        #
+#    Updated: 2019/01/03 14:08:46 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,40 +55,38 @@ DEPS	:= Makefile includes/libft.h \
 NAME	:= libft.a
 SO		:= libft.so
 
+PROJECT	:= lib
+include utils/utils.mk
+
 all: $(NAME)
 
 so: $(SO)
 
 $(NAME): $(OBJS)
-	@echo "\n[🚀] Linking to '$(NAME)'"
+	$(_BLANK)
+	@echo "$(_HEAD)$(_GREEN)✔$(_END) ($(NAME))"
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 $(SO): $(OBJS)
-	@echo "\n[🚀] Linking to '$(SO)'"
+	$(_BLANK)
+	@echo "$(_HEAD)$(_GREEN)✔$(_END) ($(SO))"
 	@$(LD) $(LDFLAGS) -shared -o $(SO) $(OBJS)
 
 $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)
-	@echo "\r                                                                  \
-    \r\c"
+	$(_BLANK)
+	@echo -n "$(_HEAD)$< $(_GREEN)➤$(_END) $@"
 	@[ ! -d $(shell dirname $@) ] && mkdir -p $(shell dirname $@) || true
-	@echo "[💭] Making '$<' -> '$@'\c"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-norm:
-	@echo "[💭] Checking norm.."
-	@norminette $(SRCS) $(DEPS)
-
 clean:
-	@echo "[🗑️] Cleaning objects.. \c"
+	@echo "$(_HEAD)$(_RED)⨯$(_END) objs"
 	@$(RM) $(OBJS)
-	@echo "Ok !"
 
 fclean: clean
-	@echo "[🗑️] Cleaning binaries.. \c"
+	@echo "$(_HEAD)$(_RED)⨯$(_END) exec"
 	@$(RM) $(NAME)
 	@$(RM) $(SO)
-	@echo "Ok !"
 
 re: fclean all
 
-.PHONY: all so norm clean fclean re
+.PHONY: all so clean fclean re

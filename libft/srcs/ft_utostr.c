@@ -16,7 +16,7 @@ char	*ft_utostr(unsigned long long num, int base)
 {
 	char	*fresh;
 	char	*sbase;
-	size_t	ilen;
+	int		ilen;
 
 	sbase = "0123456789abcdef";
 	ilen = ft_uintlen(num, base);
@@ -26,7 +26,7 @@ char	*ft_utostr(unsigned long long num, int base)
 	{
 		fresh[ilen--] = sbase[(num % base)];
 		num = num / base;
-		if (!num || index < 0)
+		if (!num || ilen < 0)
 			break ;
 	}
 	return (fresh);

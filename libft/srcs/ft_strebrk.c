@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/07 14:30:52 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/07 14:36:21 by lroux            ###   ########.fr       */
+/*   Updated: 2018/12/30 20:13:50 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,19 @@
 
 char	*ft_strebrk(const char *s, const char *charset)
 {
-	char *pos;
+	const char *sc;
 
-	while (*charset)
-		if ((pos = ft_strchr(s, *charset++)))
-			return (pos);
-	return ((char*)s + ft_strlen(s));
+	sc = charset;
+	while (*s)
+	{
+		while (*charset)
+		{
+			if (*charset == *s)
+				return ((char*)s);
+			charset++;
+		}
+		charset = sc;
+		++s;
+	}
+	return ((char*)s);
 }

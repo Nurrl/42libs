@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 17:23:00 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 17:14:49 by lroux            ###   ########.fr       */
+/*   Updated: 2018/12/30 19:26:27 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	read_line(int fd, char **line, t_gnldata **head, t_gnldata **cur)
 		ret = read((*cur)->descriptor, (*cur)->data, BUFF_SIZE);
 		if (ret == -1)
 			return (GNL_ERR);
-		else if (ret == 0 && ft_strlen(*line))
+		else if (((*cur)->data[ret] = 0) == 0 && ret == 0 && ft_strlen(*line))
 			return (GNL_READ);
 	}
 	if (!ft_strlen((*cur)->data))

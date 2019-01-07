@@ -20,9 +20,8 @@ int		ft_atoi(const char *str)
 	while (*str == ' ' || *str == '\t' || *str == '\v' || *str == '\f'
 			|| *str == '\r' || *str == '\n')
 		++str;
-	if (*str == '+')
-		str++;
-	else if ((negative = (*str == '-') ? true : false))
+	negative = (*str == '-') ? true : false;
+	if (*str == '+' || negative)
 		str++;
 	if (!ft_isdigit(*str))
 		return (0);
