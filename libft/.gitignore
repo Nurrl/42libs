@@ -1,0 +1,11 @@
+# Compiled files
+*.o
+*.a
+*.so
+a.out
+
+# Vim temporary files
+*.swp
+
+# Test mains
+main.c
