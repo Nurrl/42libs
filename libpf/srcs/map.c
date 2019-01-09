@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
 #define BARE  0
 #define LPRE  1

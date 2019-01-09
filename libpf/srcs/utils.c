@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
 int		pfappend(char **ret, int *count, t_flag flag, t_bool freeit)
 {

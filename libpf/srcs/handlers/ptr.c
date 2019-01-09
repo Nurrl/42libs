@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   oct.c                                              :+:      :+:    :+:   */
+/*   ptr.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 14:40:13 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:40:55 by lroux            ###   ########.fr       */
+/*   Created: 2018/12/05 14:48:06 by lroux             #+#    #+#             */
+/*   Updated: 2018/12/05 14:48:25 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
-void		pfhandleoct(t_arg *arg, t_flag *flag)
+void		pfhandleptr(t_arg *arg, t_flag *flag)
 {
-	t_uint64	nb;
+	char *num;
 
-	nb = arg->l;
-	if (nb > 0 && flag->flags & FLAGALTER)
-		flag->precision = (flag->precision < ft_uintlen(nb, 8) + 2)
-			? ft_uintlen(nb, 8) + 2 : flag->precision;
-	if (nb == 0 && flag->precision == 0 && !(flag->flags & FLAGALTER))
+	if (!arg->l && flag->precision == 0)
 	{
-		flag->finished = ft_strdup("");
+		flag->finished = ft_strdup("0x");
 		return ;
 	}
-	flag->finished = pfutostr(nb, 8, flag->precision);
+	if (!(num = pfutostr(arg->l, 16, flag->precision)))
+		return ;
+	pfprepend("0x", &num, false);
+	flag->finished = num;
 }

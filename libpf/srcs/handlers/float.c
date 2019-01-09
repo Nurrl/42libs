@@ -1,28 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptr.c                                              :+:      :+:    :+:   */
+/*   float.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 14:48:06 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:48:25 by lroux            ###   ########.fr       */
+/*   Created: 2018/11/29 15:25:48 by lroux             #+#    #+#             */
+/*   Updated: 2018/12/05 14:48:42 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
-void		pfhandleptr(t_arg *arg, t_flag *flag)
+void		pfhandlefloat(t_arg *arg, t_flag *flag)
 {
-	char *num;
-
-	if (!arg->l && flag->precision == 0)
-	{
-		flag->finished = ft_strdup("0x");
-		return ;
-	}
-	if (!(num = pfutostr(arg->l, 16, flag->precision)))
-		return ;
-	pfprepend("0x", &num, false);
-	flag->finished = num;
+	flag->precision = (flag->precision == -1) ? 6 : flag->precision;
+	flag->finished = pfdtostr(arg->f,
+			flag->precision, (flag->flags & FLAGALTER) ? 1 : 0);
 }

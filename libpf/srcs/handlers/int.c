@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
 void		pfhandleint(t_arg *arg, t_flag *flag)
 {

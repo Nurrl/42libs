@@ -6,20 +6,23 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/01/09 20:42:24 by lroux            ###   ########.fr        #
+#    Updated: 2019/01/09 21:04:07 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= libgc
+PROJECT	:= libpf
 NAME	:= $(PROJECT).a
 
 SRCDIR	:= srcs
 OBJDIR	:= objs
 INCDIR	:= incs
 
-SRCS	:= alloc.c cleaner.c list.c wrappers.c
+SRCS	:= wrappers.c handlers.c lexer.c map.c utils.c subst.c \
+		   handlers/char.c handlers/int.c handlers/ptr.c \
+		   handlers/oct.c handlers/hex.c handlers/bonus.c \
+		   handlers/float.c
 
-LIBS	:=
+LIBS	:= libft
 LIBDIR	:= ..
 
 # Include core

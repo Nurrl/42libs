@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
 static const t_psubst g_subs[128] = {
 	{"black", "\x1b[30m"},

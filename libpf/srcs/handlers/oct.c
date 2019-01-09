@@ -1,38 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hex.c                                              :+:      :+:    :+:   */
+/*   oct.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 14:38:53 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:39:24 by lroux            ###   ########.fr       */
+/*   Created: 2018/12/05 14:40:13 by lroux             #+#    #+#             */
+/*   Updated: 2018/12/05 14:40:55 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libprintf.intern.h"
+#include "libpf.intern.h"
 
-void		pfhandlehex(t_arg *arg, t_flag *flag)
+void		pfhandleoct(t_arg *arg, t_flag *flag)
 {
-	t_uint64 nb;
+	t_uint64	nb;
 
 	nb = arg->l;
-	if (nb == 0 && flag->precision == 0)
+	if (nb > 0 && flag->flags & FLAGALTER)
+		flag->precision = (flag->precision < ft_uintlen(nb, 8) + 2)
+			? ft_uintlen(nb, 8) + 2 : flag->precision;
+	if (nb == 0 && flag->precision == 0 && !(flag->flags & FLAGALTER))
 	{
 		flag->finished = ft_strdup("");
 		return ;
 	}
-	if (nb > 0 && flag->flags & FLAGALTER)
-		flag->leading = "0x";
-	flag->finished = pfutostr(nb, 16, flag->precision);
-}
-
-void		pfhandlehexup(t_arg *arg, t_flag *flag)
-{
-	pfhandlehex(arg, flag);
-	if (!flag->finished)
-		return ;
-	if (flag->leading)
-		flag->leading = "0X";
-	flag->finished = ft_strupr(flag->finished);
+	flag->finished = pfutostr(nb, 8, flag->precision);
 }
