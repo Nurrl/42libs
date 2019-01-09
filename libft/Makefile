@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/01/03 14:08:46 by lroux            ###   ########.fr        #
+#    Updated: 2019/01/07 20:49:33 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ DEPS	:= Makefile includes/libft.h \
 NAME	:= libft.a
 SO		:= libft.so
 
-PROJECT	:= lib
+PROJECT	:= libft
 include utils/utils.mk
 
 all: $(NAME)
