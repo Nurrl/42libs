@@ -1,4 +1,6 @@
-# Security for direct inclusion
+# ###
+# I - Global defines
+# ###
 MODULE	:= $(notdir \
    $(lastword $(filter-out $(lastword $(MAKEFILE_LIST)), $(MAKEFILE_LIST))))
 
@@ -6,15 +8,6 @@ ifndef MODULE
     $(error You cannot include this file alone)
 endif
 
-PWD		:= $(PWD)
-define \n
-
-
-endef
-
-#
-# - Default utils
-#
 CC		:= gcc
 
 LD		:= gcc
@@ -25,9 +18,14 @@ MAKE	:= make --no-print-directory
 
 SHELL	:= /bin/bash
 
-#
-# - Variables autogeneration
-#
+define \n
+
+
+endef
+
+# ###
+# II - Variables and flags
+# ###
 
 # Check if variables are undefined
 ifndef PROJECT
@@ -71,25 +69,30 @@ ifdef LIBS
     LIBSPATH	:= $(addprefix $(LIBDIR)/, $(LIBS))
     $(foreach lib, $(LIBS), $(eval LIBFILES += $(LIBDIR)/$(lib)/$(lib).a))
 
+    # Includes for external libaries
     INCS		+= $(addsuffix /$(INCDIR), $(LIBSPATH))
-    LDFLAGS		:= $(addprefix -L$(LIBDIR)/, $(LIBS))
-    LDFLAGS		+= -Wl,--start-group \
-        $(addprefix -l, $(patsubst lib%, %, $(LIBS))) \
-    -Wl,--end-group
+    LDFLAGS		+= $(addprefix -L$(LIBDIR)/, $(LIBS))
+    ifneq ($(shell uname -s),Darwin)
+        LDFLAGS	+= -Wl,--start-group
+    endif
+    LDFLAGS		+= $(addprefix -l, $(patsubst lib%, %, $(LIBS)))
+    ifneq ($(shell uname -s),Darwin)
+        LDFLAGS	+= -Wl,--end-group
+    endif
 endif
 INCS	:= $(addprefix -I, $(INCS))
 
 CFLAGS	?= -Wall -Wextra -Werror
-ifeq ($(DEBUG), true)
+ifeq ($(DEBUG), 1)
 	CFLAGS	+= -g3
 else
 	CFLAGS	+= -Ofast
 endif
 CFLAGS	+= $(INCS)
 
-#
-# - Formatting
-#
+# ###
+# III - Formats and output
+# ###
 _END	:= $(shell echo -ne "\x1b[0m")
 _BOLD	:= $(shell echo -ne "\x1b[1m")
 _UNDER	:= $(shell echo -ne "\x1b[4m")
@@ -116,9 +119,9 @@ _BLANK	:= @perl -e \
 				"print \"\r\"; print \" \"x$(shell tput cols); print \"\r\""
 _HEAD	:= $(shell echo -ne " $(_BOLD)$(_UNDER)▲$(PROJECT)▼$(_END) ")
 
-#
-# - Common targets
-#
+# ###
+# VI - Targets
+# ###
 ifeq ($(MODULE), project.mk)
 all: $(LIBS) $(NAME)
 
