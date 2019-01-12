@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 15:42:32 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/18 13:54:14 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/12 14:07:36 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,6 @@ typedef enum {
 
 # endif
 
-typedef struct	s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}				t_list;
-
 /*
 ** Part I - Memory operations
 ** Custom: ft_calloc, ft_realloc.
@@ -92,7 +85,6 @@ void			*ft_memmove(void *dst, const void *src, size_t len);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 
-void			*ft_memalloc(size_t size);
 void			ft_memdel(void **ap);
 void			*ft_calloc(size_t count, size_t size);
 void			*ft_realloc(void *ptr, size_t size);
@@ -147,8 +139,8 @@ char			*ft_strlwr(char *s);
 
 /*
 ** Part III - Tests, maths and conversions
-** Custom: ft_isupper, ft_islower. ft_itostr, ft_sqrt, ft_strisdigit,
-** ft_strisndigit, ft_round, ft_dtostr.
+** Custom: ft_isupper, ft_islower. ft_itostr, ft_utostr.c, ft_sqrt,
+** ft_strisdigit, ft_strisndigit.
 */
 
 int				ft_isalpha(int c);
@@ -168,35 +160,9 @@ char			ft_uintlen(unsigned long long n, int base);
 
 char			*ft_itostr(long long num, int base);
 char			*ft_utostr(unsigned long long num, int base);
-char			*ft_itoa(int n);
 int				ft_atoi(const char *str);
 
 int				ft_isupper(int c);
 int				ft_islower(int c);
-
-/*
-** Part IV - Terminal and file descriptors
-*/
-
-void			ft_putchar_fd(char c, int fd);
-void			ft_putstr_fd(const char *s, int fd);
-void			ft_putendl_fd(const char *s, int fd);
-void			ft_putnbr_fd(int n, int fd);
-
-void			ft_putchar(char c);
-void			ft_putstr(const char *s);
-void			ft_putendl(const char *s);
-void			ft_putnbr(int n);
-
-/*
-** Part V - Linked lists
-*/
-
-t_list			*ft_lstnew(void const *content, size_t content_size);
-void			ft_lstdelone(t_list **alst, void (*del)(void*, size_t));
-void			ft_lstdel(t_list **alst, void (*del)(void*, size_t));
-void			ft_lstadd(t_list **alst, t_list *new);
-void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
 #endif

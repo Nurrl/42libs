@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 14:14:14 by lroux             #+#    #+#             */
-/*   Updated: 2018/11/08 14:52:24 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/12 14:08:22 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 char	*ft_strnew(size_t size)
 {
-	return (ft_memalloc(size + 1));
+	return (ft_calloc(size + 1, 1));
 }
