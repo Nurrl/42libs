@@ -1,6 +1,5 @@
 # Include common stuff
-MODULE	:= lib
-include $(dir $(lastword $(MAKEFILE_LIST)))core.mk
+include $(shell dirname $(lastword $(MAKEFILE_LIST)))/core.mk
 
 ARFLAGS	:= rcs
 

@@ -1,7 +1,16 @@
 # Security for direct inclusion
+MODULE	:= $(notdir \
+   $(lastword $(filter-out $(lastword $(MAKEFILE_LIST)), $(MAKEFILE_LIST))))
+
 ifndef MODULE
     $(error You cannot include this file alone)
 endif
+
+PWD		:= $(PWD)
+define \n
+
+
+endef
 
 #
 # - Default utils
@@ -44,9 +53,9 @@ endif
 
 SRCS	:= $(addprefix $(SRCDIR)/, $(SRCS))
 OBJS	:= $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-INCS	:= $(INCDIR)
+INCS	+= $(INCDIR)
 
-DEPS	:= Makefile $(shell find $(INCDIR) -type f -name *.h)
+DEPS	+= Makefile $(shell find $(INCDIR) -type f -name *.h)
 
 ifdef LIBS
     ifndef LIBDIR
@@ -64,7 +73,9 @@ ifdef LIBS
 
     INCS		+= $(addsuffix /$(INCDIR), $(LIBSPATH))
     LDFLAGS		:= $(addprefix -L$(LIBDIR)/, $(LIBS))
-    LDFLAGS		+= $(addprefix -l, $(patsubst lib%, %, $(LIBS)))
+    LDFLAGS		+= -Wl,--start-group \
+        $(addprefix -l, $(patsubst lib%, %, $(LIBS))) \
+    -Wl,--end-group
 endif
 INCS	:= $(addprefix -I, $(INCS))
 
@@ -108,7 +119,7 @@ _HEAD	:= $(shell echo -ne " $(_BOLD)$(_UNDER)▲$(PROJECT)▼$(_END) ")
 #
 # - Common targets
 #
-ifeq ($(MODULE), "project")
+ifeq ($(MODULE), project.mk)
 all: $(LIBFILES) $(NAME)
 
 $(LIBFILES):
@@ -124,18 +135,18 @@ $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)
 	@echo -n "$(_HEAD)$< $(_GREEN)➤$(_END) $@"
 
 clean:
-ifeq ($(MODULE), "project")
-	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) $@)
+ifeq ($(MODULE), project.mk)
+	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) $@${\n})
 endif
-	@echo "$(_HEAD)$(_RED)⨯$(_END) objs"
 	@$(RM) $(OBJS)
+	@echo "$(_HEAD)$(_RED)⨯$(_END) objs"
 
 fclean: clean
-ifeq ($(MODULE), "project")
-	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) $@)
+ifeq ($(MODULE), project.mk)
+	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) $@${\n})
 endif
-	@echo "$(_HEAD)$(_RED)⨯$(_END) exec"
 	@$(RM) $(NAME)
+	@echo "$(_HEAD)$(_RED)⨯$(_END) exec"
 
 re: fclean all
 

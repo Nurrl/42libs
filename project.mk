@@ -1,8 +1,7 @@
 # Include common stuff
-MODULE	:= project
-include $(dir $(lastword $(MAKEFILE_LIST)))core.mk
+include $(shell dirname $(lastword $(MAKEFILE_LIST)))/core.mk
 
 $(NAME): $(OBJS)
-	@$(LD) $(LDFLAGS) $(NAME) $(OBJS)
+	@$(LD) $(OBJS) $(LDFLAGS) -o $(NAME)
 	$(_BLANK)
 	@echo "$(_HEAD)$(_GREEN)✔$(_END) ($(NAME))"
