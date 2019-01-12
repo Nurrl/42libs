@@ -120,10 +120,10 @@ _HEAD	:= $(shell echo -ne " $(_BOLD)$(_UNDER)▲$(PROJECT)▼$(_END) ")
 # - Common targets
 #
 ifeq ($(MODULE), project.mk)
-all: $(LIBFILES) $(NAME)
+all: $(LIBS) $(NAME)
 
-$(LIBFILES):
-	@$(MAKE) --directory=$(shell dirname $@)
+$(LIBS):
+	@$(MAKE) -s --directory $(LIBDIR)/$@
 else
 all: $(NAME)
 endif
@@ -136,19 +136,21 @@ $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)
 
 clean:
 ifeq ($(MODULE), project.mk)
-	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) $@${\n})
+	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) clean${\n})
 endif
 	@$(RM) $(OBJS)
 	@echo "$(_HEAD)$(_RED)⨯$(_END) objs"
 
-fclean: clean
+eclean:
 ifeq ($(MODULE), project.mk)
-	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) $@${\n})
+	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) eclean${\n})
 endif
 	@$(RM) $(NAME)
 	@echo "$(_HEAD)$(_RED)⨯$(_END) exec"
 
+fclean: clean eclean
+
 re: fclean all
 
-.PHONY: all so clean fclean re
+.PHONY: all clean eclean fclean re
 
