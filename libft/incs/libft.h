@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 15:42:32 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/12 14:07:36 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/15 14:36:30 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+
 # include <string.h>
+# include <limits.h>
+
+# include <errno.h>
 
 /*
 ** Part 0 - Macro & Types
@@ -71,6 +75,15 @@ typedef enum {
 }	t_bool;
 
 # endif
+
+/*
+** Define common file descriptors
+*/
+typedef enum {
+	stdin = 0,
+	stdout = 1,
+	stderr = 2
+}	t_stdfd;
 
 /*
 ** Part I - Memory operations
@@ -133,14 +146,15 @@ char			*ft_strtrim(const char *s);
 char			**ft_strsplit(const char *s, char c);
 
 int				ft_cc(const char *s, char c);
+int				ft_cw(const char *s);
 
 char			*ft_strupr(char *s);
 char			*ft_strlwr(char *s);
 
 /*
 ** Part III - Tests, maths and conversions
-** Custom: ft_isupper, ft_islower. ft_itostr, ft_utostr.c, ft_sqrt,
-** ft_strisdigit, ft_strisndigit.
+** Custom: ft_isupper, ft_islower, ft_isspace, ft_itostr, ft_utostr.c, ft_sqrt,
+** ft_strisdigit, ft_strisndigit, ft_strtoll.
 */
 
 int				ft_isalpha(int c);
@@ -148,6 +162,7 @@ int				ft_isdigit(int c);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_isprint(int c);
+int				ft_isspace(int c);
 
 int				ft_strisdigit(char *s);
 int				ft_strisndigit(char *s, size_t n);
@@ -161,6 +176,7 @@ char			ft_uintlen(unsigned long long n, int base);
 char			*ft_itostr(long long num, int base);
 char			*ft_utostr(unsigned long long num, int base);
 int				ft_atoi(const char *str);
+long long		ft_strtoll(const char *str, char **endptr, int base);
 
 int				ft_isupper(int c);
 int				ft_islower(int c);

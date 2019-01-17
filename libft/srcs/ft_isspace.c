@@ -1,23 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uintlen.c                                       :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <git@heofon.co>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 15:20:57 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/17 14:35:01 by lroux            ###   ########.fr       */
+/*   Created: 2019/01/14 18:34:22 by lroux             #+#    #+#             */
+/*   Updated: 2019/01/15 14:50:23 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	ft_uintlen(unsigned long long n, int base)
+int	ft_isspace(int c)
 {
-	size_t len;
-
-	len = 0;
-	while (n /= base)
-		++len;
-	return (len + 1);
+	return (c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r' || c == ' ');
 }

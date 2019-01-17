@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 14:40:13 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:40:55 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/17 14:37:23 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void		pfhandleoct(t_arg *arg, t_flag *flag)
 
 	nb = arg->l;
 	if (nb > 0 && flag->flags & FLAGALTER)
-		flag->precision = (flag->precision < ft_uintlen(nb, 8) + 2)
-			? ft_uintlen(nb, 8) + 2 : flag->precision;
+		flag->precision = (flag->precision < ft_uintlen(nb, 8) + 1)
+			? ft_uintlen(nb, 8) + 1 : flag->precision;
 	if (nb == 0 && flag->precision == 0 && !(flag->flags & FLAGALTER))
 	{
 		flag->finished = ft_strdup("");

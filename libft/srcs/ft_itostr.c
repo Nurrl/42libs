@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 12:34:35 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/03 15:45:00 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/17 14:43:11 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_itostr(long long num, int base)
 
 	sbase = "0123456789abcdef";
 	invert = (num < 0) ? true : false;
-	index = ft_intlen(num, base);
+	index = ft_intlen(num, base) - 1;
 	if (!(fresh = ft_strnew(index + 1)))
 		return (NULL);
 	while (1)

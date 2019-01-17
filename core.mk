@@ -80,7 +80,6 @@ ifdef LIBS
         LDFLAGS	+= -Wl,--end-group
     endif
 endif
-INCS	:= $(addprefix -I, $(INCS))
 
 CFLAGS	?= -Wall -Wextra -Werror
 ifeq ($(DEBUG), 1)
@@ -88,7 +87,7 @@ ifeq ($(DEBUG), 1)
 else
 	CFLAGS	+= -Ofast
 endif
-CFLAGS	+= $(INCS)
+CFLAGS	+= $(addprefix -I, $(INCS))
 
 # ###
 # III - Formats and output
@@ -129,6 +128,12 @@ $(LIBS):
 	@$(MAKE) -s --directory $(LIBDIR)/$@
 else
 all: $(NAME)
+endif
+
+ifneq (, $(shell which norminette))
+norm:
+	@norminette $(NFLAGS) \
+		| grep -v 'Not a valid file' | grep -E 'Warning|Error' -B 1 || true
 endif
 
 $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)

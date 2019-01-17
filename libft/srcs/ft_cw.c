@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uintlen.c                                       :+:      :+:    :+:   */
+/*   ft_cw.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <git@heofon.co>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/03 15:20:57 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/17 14:35:01 by lroux            ###   ########.fr       */
+/*   Created: 2019/01/15 14:38:03 by lroux             #+#    #+#             */
+/*   Updated: 2019/01/15 14:51:48 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	ft_uintlen(unsigned long long n, int base)
+int	ft_cw(const char *s)
 {
-	size_t len;
+	int count;
 
-	len = 0;
-	while (n /= base)
-		++len;
-	return (len + 1);
+	count = 0;
+	while (*s)
+	{
+		while (ft_isspace(*s))
+			++s;
+		if (!*s)
+			break ;
+		while (!ft_isspace(*s) && *s)
+			++s;
+		count++;
+	}
+	return (count);
 }

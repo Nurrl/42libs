@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 15:19:24 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/03 15:45:54 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/17 14:35:09 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ char	ft_intlen(long long n, int base)
 	if (len > 0)
 		n = -n;
 	while (n /= base)
-		len++;
-	return (len);
+		++len;
+	return (len + 1);
 }

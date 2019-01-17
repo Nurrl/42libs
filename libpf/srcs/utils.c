@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:49:07 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/09 14:53:23 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/17 14:42:24 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*pfitostr(long long num, int base, t_flag *flag)
 	t_bool	invert;
 
 	invert = (num < 0) ? true : false;
-	index = ft_intlen(num, base) + ((invert) ? 0 : 1);
+	index = ft_intlen(num, base) + ((invert) ? -1 : 0);
 	index += (flag->precision <= index) ? 0 : (flag->precision - index);
 	if (!(fresh = ft_strnew(index + 1)))
 		return (NULL);
@@ -102,7 +102,7 @@ char	*pfutostr(unsigned long long num, int base, int precision)
 	char	*fresh;
 	int		index;
 
-	index = ft_uintlen(num, base) + 1;
+	index = ft_uintlen(num, base);
 	index += (precision <= index) ? 0 : (precision - index);
 	if (!(fresh = ft_strnew(index + 1)))
 		return (NULL);

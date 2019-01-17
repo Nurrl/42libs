@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 12:34:35 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/03 15:47:13 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/17 14:43:32 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_utostr(unsigned long long num, int base)
 	int		ilen;
 
 	sbase = "0123456789abcdef";
-	ilen = ft_uintlen(num, base);
+	ilen = ft_uintlen(num, base) - 1;
 	if (!(fresh = ft_strnew(ilen + 1)))
 		return (NULL);
 	while (1)
