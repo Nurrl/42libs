@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/03 15:52:14 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/28 14:50:04 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 static const t_psubst g_subs[128] = {
 	{"black", "\x1b[30m"},
-	{"white", "\x1b[37m"},
-
 	{"red", "\x1b[31m"},
 	{"green", "\x1b[32m"},
 	{"yellow", "\x1b[33m"},
 	{"blue", "\x1b[34m"},
 	{"magenta", "\x1b[35m"},
 	{"cyan", "\x1b[36m"},
+	{"white", "\x1b[37m"},
+
+	{"lightblack", "\x1b[90m"},
 	{"lightred", "\x1b[91m"},
 	{"lightgreen", "\x1b[92m"},
 	{"lightyellow", "\x1b[93m"},
 	{"lightblue", "\x1b[94m"},
 	{"lightmagenta", "\x1b[95m"},
 	{"lightcyan", "\x1b[96m"},
+	{"lightwhite", "\x1b[97m"},
 
 	{"bold", "\x1b[1m"},
 	{"under", "\x1b[4m"},

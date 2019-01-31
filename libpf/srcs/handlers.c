@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle.c                                           :+:      :+:    :+:   */
+/*   handlers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/09 19:02:54 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/18 16:10:23 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				ft_vasprintf(char **ret, const char *format, va_list ap)
 		{
 			len = ft_strebrk(format, "{%") - format;
 			pfappend(ret, &count, (t_flag)
-					{ .len = len, .finished = ft_strndup(format, len) }, true);
+					{ .len = len, .finished = (char*)format }, false);
 			format += len;
 		}
 		if (!*ret || !*format)

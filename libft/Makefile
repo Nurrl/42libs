@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/01/15 14:41:36 by lroux            ###   ########.fr        #
+#    Updated: 2019/01/17 19:39:51 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS	:= ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c \
 		   ft_strnjoin.c ft_strreset.c ft_strjoinfree.c ft_strnjoinfree.c \
 		   ft_sqrt.c ft_cc.c ft_cw.c ft_strupr.c ft_strlwr.c gnl.c \
 		   ft_strisdigit.c ft_strisndigit.c ft_pow.c ft_intlen.c \
-		   ft_uintlen.c ft_strebrk.c ft_strtoll.c
+		   ft_uintlen.c ft_strebrk.c ft_strtoll.c ft_mk2array.c
 
 LIBS	:=
 LIBDIR	:= ..

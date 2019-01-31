@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 15:42:32 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/15 14:36:30 by lroux            ###   ########.fr       */
+/*   Updated: 2019/01/17 19:38:52 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int				ft_memcmp(const void *s1, const void *s2, size_t n);
 void			ft_memdel(void **ap);
 void			*ft_calloc(size_t count, size_t size);
 void			*ft_realloc(void *ptr, size_t size);
+void			**ft_mk2array(int x, int y, size_t size);
 
 /*
 ** Part II - String/Char operations

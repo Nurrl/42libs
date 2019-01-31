@@ -83,11 +83,13 @@ endif
 
 CFLAGS	?= -Wall -Wextra -Werror
 ifeq ($(DEBUG), 1)
-	CFLAGS	+= -g3
+	CFLAGS	:= $(filter-out -Werror,$(CFLAGS)) -g3
+	MKVARS	+= DEBUG=$(DEBUG)
 else
 	CFLAGS	+= -Ofast
 endif
 CFLAGS	+= $(addprefix -I, $(INCS))
+MAKE	+= $(MKVARS)
 
 # ###
 # III - Formats and output
