@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 17:49:07 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/17 14:42:24 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/14 04:32:10 by glodi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ char	*pfitostr(long long num, int base, t_flag *flag)
 		return (NULL);
 	while (index)
 	{
-		fresh[--index] = "0123456789abcdef"[(invert) ?
-			-(num % base) : (num % base)];
+		fresh[--index] = "0123456789abcdef"[(invert)
+			? -(num % base) : (num % base)];
 		num = num / base;
 	}
 	if (invert)

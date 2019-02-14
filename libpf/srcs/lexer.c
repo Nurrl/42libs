@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 13:15:05 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/07 16:39:25 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/14 04:31:49 by glodi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	pflexparam(t_flag *flag, char **format)
 void	pflexflags(t_flag *flag, char **format)
 {
 	flag->flags = 0;
-	while (**format == '#' || **format == '-' || **format == '+' ||
-			**format == ' ' || **format == '0')
+	while (**format == '#' || **format == '-' || **format == '+'
+			|| **format == ' ' || **format == '0')
 	{
 		flag->flags |= (**format == '#' && !(flag->flags & FLAGALTER))
 			? FLAGALTER : 0;
@@ -103,8 +103,8 @@ int		pflexlandt(t_flag *flag, char **format)
 	char *dum;
 
 	dum = *format;
-	while (**format == 'l' || **format == 'h' || **format == 'L' ||
-			**format == 'j' || **format == 'z' || **format == 't')
+	while (**format == 'l' || **format == 'h' || **format == 'L'
+			|| **format == 'j' || **format == 'z' || **format == 't')
 	{
 		if (!**format)
 			return (PF_ERR);

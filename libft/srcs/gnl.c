@@ -6,14 +6,14 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/13 17:23:00 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/30 19:26:27 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/13 21:52:56 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gnl.intern.h"
 #include "libft.h"
 
-static int	clear(t_gnldata **head, t_gnldata *toclear, char **line)
+static int	clear(t_gnldata **head, t_gnldata *toclear, char **line, int state)
 {
 	if (!*head || !toclear)
 		return (GNL_ERR);
@@ -28,9 +28,12 @@ static int	clear(t_gnldata **head, t_gnldata *toclear, char **line)
 	}
 	free(toclear);
 	toclear = NULL;
-	free(*line);
-	*line = NULL;
-	return (GNL_EOF);
+	if (line)
+	{
+		free(*line);
+		*line = NULL;
+	}
+	return (state);
 }
 
 static int	read_line(int fd, char **line, t_gnldata **head, t_gnldata **cur)
@@ -42,12 +45,12 @@ static int	read_line(int fd, char **line, t_gnldata **head, t_gnldata **cur)
 	{
 		ret = read((*cur)->descriptor, (*cur)->data, BUFF_SIZE);
 		if (ret == -1)
-			return (GNL_ERR);
+			return (clear(head, *cur, NULL, GNL_ERR));
 		else if (((*cur)->data[ret] = 0) == 0 && ret == 0 && ft_strlen(*line))
 			return (GNL_READ);
 	}
 	if (!ft_strlen((*cur)->data))
-		return (clear(head, *cur, line));
+		return (clear(head, *cur, line, GNL_EOF));
 	if (!(endl = ft_strchr((*cur)->data, '\n')))
 	{
 		if (!(*line = ft_strjoinfree(*line, (*cur)->data)))
