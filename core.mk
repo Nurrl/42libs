@@ -15,6 +15,7 @@ AR		:= ar
 
 RM		:= rm -f
 MAKE	:= make --no-print-directory
+LN		:= ln -sf
 
 SHELL	:= /bin/bash
 
@@ -118,7 +119,7 @@ _IWHITE	:= $(shell echo -ne "\x1b[47m")
 # Custom format variables.
 _BLANK	:= @perl -e \
 				"print \"\r\"; print \" \"x$(shell tput cols); print \"\r\""
-_HEAD	:= $(shell echo -ne " $(_BOLD)$(_UNDER)▲$(PROJECT)▼$(_END) ")
+_HEAD	:= $(shell echo -ne "$(_BOLD)$(PROJECT):$(_END) ")
 
 # ###
 # VI - Targets
@@ -142,7 +143,7 @@ $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)
 	@[ ! -d $(shell dirname $@) ] && mkdir -p $(shell dirname $@) || true
 	@$(CC) $(CFLAGS) -c $< -o $@
 	$(_BLANK)
-	@echo -n "$(_HEAD)$< $(_GREEN)➤$(_END) $@"
+	@echo -n "$(_HEAD)$<"
 
 clean:
 ifeq ($(MODULE), project.mk)
@@ -156,7 +157,12 @@ ifeq ($(MODULE), project.mk)
 	@$(foreach path, $(LIBSPATH), $(MAKE) -C $(path) eclean${\n})
 endif
 	@$(RM) $(NAME)
-	@echo "$(_HEAD)$(_RED)⨯$(_END) exec"
+	@echo -n "$(_HEAD)$(_RED)⨯$(_END) exec"
+ifdef LNKNAME
+	@$(RM) $(LNKNAME)
+	@echo -n " $(_RED)⨯$(_END) lnk"
+endif
+	@echo
 
 fclean: clean eclean
 

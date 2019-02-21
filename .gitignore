@@ -9,3 +9,6 @@ a.out
 
 # Test mains
 main.c
+
+# Build dirs
+build/

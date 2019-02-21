@@ -6,4 +6,9 @@ ARFLAGS	:= rcs
 $(NAME): $(OBJS)
 	@$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 	$(_BLANK)
-	@echo "$(_HEAD)$(_GREEN)✔$(_END) ($(NAME))"
+	@echo -n "$(_HEAD)$(_GREEN)✔$(_END) $(NAME)"
+ifdef LNKNAME
+	@$(LN) $(NAME) $(LNKNAME)
+	@echo -n " $(_CYAN)⬅$(_END) $(LNKNAME)"
+endif
+	@echo
