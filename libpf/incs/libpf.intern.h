@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/21 14:54:44 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/21 15:02:58 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBPF_INTERN_H
 
 # include "libpf.h"
+# define NOWARN
 # include <lift.h>
 
 # include <stddef.h>

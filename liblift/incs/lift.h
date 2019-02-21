@@ -6,12 +6,16 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:38:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/21 14:55:47 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/21 15:02:36 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIFT_H
 # define LIFT_H
+
+# ifndef NOWARN
+#  warning "Never include this header alone, unless you want to debug !"
+# endif
 
 /*
 **  _ _ _     _ _  __ _
