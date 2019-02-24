@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:56:38 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 15:23:51 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/24 22:09:41 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # define GNL_READ 1
 # define GNL_EOF 0
 # define GNL_ERR -1
+
+# undef stdin
+# undef stdout
+# undef stderr
 
 enum {
 	stdin = 0,

@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strisndigit.c                                   :+:      :+:    :+:   */
+/*   ft_strisn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 17:59:31 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 17:12:19 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/24 22:33:14 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "lift/char.h"
 
-int		ft_strisndigit(char *s, size_t n)
+int	ft_strisn(char *s, size_t n, int (*is)(int c))
 {
 	--s;
 	while (*(++s) && n--)
-		if (!ft_isdigit(*s))
+		if (!is(*s))
 			return (0);
 	return (1);
 }

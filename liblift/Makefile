@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/02/21 14:51:28 by lroux            ###   ########.fr        #
+#    Updated: 2019/02/24 22:32:35 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,8 +71,8 @@ SRCS	:= \
 			string/ft_strdup.c \
 			string/ft_strebrk.c \
 			string/ft_strequ.c \
-			string/ft_strisdigit.c \
-			string/ft_strisndigit.c \
+			string/ft_stris.c \
+			string/ft_strisn.c \
 			string/ft_strjoin.c \
 			string/ft_strjoinfree.c \
 			string/ft_strlcat.c \

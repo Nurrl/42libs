@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 06:13:38 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:27:15 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/24 22:31:23 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				ft_strcw(const char *s);
 char			*ft_strupr(char *s);
 char			*ft_strlwr(char *s);
 
-int				ft_strisdigit(char *s);
-int				ft_strisndigit(char *s, size_t n);
+int				ft_stris(char *s, int (*is)(int c));
+int				ft_strisn(char *s, size_t n, int (*is)(int c));
 
 #endif

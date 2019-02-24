@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:51:41 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 15:02:32 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/24 22:48:34 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,14 @@ typedef unsigned long long int	t_uint64;
 ** Implementation of boolean type in C,
 ** protected for inclusion of <stdbool.h>
 */
-# ifndef __STDBOOL_H
+# ifdef __STDBOOL_H
+#  undef false
+#  undef true
+# endif
 
 typedef enum {
 	false = 0,
 	true = 1
 }	t_bool;
-
-# else
-#  error "You can't use <stdbool.h> with liblift."
-# endif
 
 #endif
