@@ -71,12 +71,21 @@ ifdef LIBS
     $(foreach lib, $(LIBS), $(eval LIBFILES += $(LIBDIR)/$(lib)/$(lib).a))
 
     # Includes for external libaries
-    INCS		+= $(addsuffix /$(INCDIR), $(LIBSPATH))
+    $(foreach lib, $(LIBSPATH), $(eval \
+    ifeq (0, $(shell test -d "$(lib)/$(INCDIR)"; echo $$?)) ${\n} \
+        INCS	+= $(addsuffix /$(INCDIR), $(lib)) ${\n} \
+    else ${\n} \
+        INCS	+= $(lib) ${\n} \
+    endif \
+    ))
+
+    # Linker flags
     LDFLAGS		+= $(addprefix -L$(LIBDIR)/, $(LIBS))
     ifneq ($(shell uname -s),Darwin)
         LDFLAGS	+= -Wl,--start-group
     endif
     LDFLAGS		+= $(addprefix -l, $(patsubst lib%, %, $(LIBS)))
+    LDFLAGS		+= $(addprefix -l, $(patsubst lib%, %, $(SLIBS)))
     ifneq ($(shell uname -s),Darwin)
         LDFLAGS	+= -Wl,--end-group
     endif
@@ -137,6 +146,8 @@ ifneq (, $(shell which norminette))
 norm:
 	@norminette $(NFLAGS) \
 		| grep -v 'Not a valid file' | grep -E 'Warning|Error' -B 1 || true
+
+.PHONY: norm
 endif
 
 $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)
