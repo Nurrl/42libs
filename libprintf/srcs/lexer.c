@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 13:15:05 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/14 04:31:49 by glodi            ###   ########.fr       */
+/*   Updated: 2019/02/25 17:07:27 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	pflexparam(t_flag *flag, char **format)
 
 	flag->param = -1;
 	if ((dum = ft_strchr(*format, '$'))
-			&& ft_strisndigit(*format, dum - *format))
+			&& ft_strisn(*format, dum - *format, &ft_isdigit))
 		flag->param = ft_atoi(*format);
 	if (flag->param != -1)
 		*format = dum + 1;
@@ -53,7 +53,7 @@ void	pflexwidth(t_flag *flag, char **format, va_list ap)
 	char *dum;
 
 	if ((dum = ft_strchr(*format, '*'))
-			&& ft_strisndigit(*format, dum - *format))
+			&& ft_strisn(*format, dum - *format, &ft_isdigit))
 	{
 		*format = dum;
 		flag->width = va_arg(ap, int);

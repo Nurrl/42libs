@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   subst.c                                            :+:      :+:    :+:   */
+/*   special.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/28 14:50:04 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/25 19:16:32 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libpf.intern.h"
 
-static const t_psubst g_subs[128] = {
+static const t_subs g_subs[128] = {
 	{"black", "\x1b[30m"},
 	{"red", "\x1b[31m"},
 	{"green", "\x1b[32m"},
@@ -54,17 +54,24 @@ static const t_psubst g_subs[128] = {
 	{NULL, NULL}
 };
 
-t_flag	*pfsubstr(char **format, t_flag *flag)
+static t_flag	*colorrgb(char **format, t_flag *flag)
 {
-	char	*start;
-	char	*key;
-	int		i;
+	(void)format;
+	(void)flag;
+	return (flag);
+}
 
-	start = *format;
-	while (**format && **format != '}')
-		(*format)++;
-	if (!**format || !(key = ft_strndup(start + 1, *format - start - 1)))
-		return (NULL);
+static t_flag	*color256(char **format, t_flag *flag)
+{
+	(void)format;
+	(void)flag;
+	return (flag);
+}
+
+static t_flag	*subs(char *start, char *key, char **format, t_flag *flag)
+{
+	int i;
+
 	i = -1;
 	while (g_subs[++i].key)
 		if (ft_strequ(g_subs[i].key, key))
@@ -81,4 +88,22 @@ t_flag	*pfsubstr(char **format, t_flag *flag)
 	flag->finished = g_subs[i].value;
 	(*format)++;
 	return (flag);
+}
+
+t_flag			*pfspecial(char **format, t_flag *flag)
+{
+	char	*start;
+	char	*key;
+
+	start = *format;
+	while (**format && **format != '}')
+		(*format)++;
+	if (!**format || !(key = ft_strndup(start + 1, *format - start - 1)))
+		return (NULL);
+	if (ft_strnequ(key, "color;", 6))
+		return ((ft_strcc(key, ';') == 1)
+			? color256(format, flag)
+			: colorrgb(format, flag));
+	else
+		return (subs(start, key, format, flag));
 }

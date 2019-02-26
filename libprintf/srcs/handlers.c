@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/18 16:10:23 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/25 19:00:13 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int				ft_vasprintf(char **ret, const char *format, va_list ap)
 	while (*format)
 	{
 		if (*format == '{')
-			pfappend(ret, &count, *pfsubstr((char**)&format, &flag), false);
+			pfappend(ret, &count, *pfspecial((char**)&format, &flag), false);
 		else if (*format == '%')
 			pfappend(ret, &count, *pflexer((char**)&format, ap, &flag), true);
 		else

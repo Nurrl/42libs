@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/21 15:02:58 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/25 19:10:49 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@
 ** Special flags where the content is being replaced
 ** by a specific constant value.
 */
-typedef struct	s_psubst {
+typedef struct	s_subs {
 	char	*key;
 	char	*value;
-}				t_psubst;
+}				t_subs;
 
 /*
 ** Internal functions
 */
 
-t_flag			*pfsubstr(char **format, t_flag *flag);
+t_flag			*pfspecial(char **format, t_flag *flag);
 t_flag			*pflexer(char **format, va_list ap, t_flag *flag);
 int				pfcall(t_flag *flag, va_list ap);
 int				pfisvalid(char type);
