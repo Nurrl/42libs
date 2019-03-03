@@ -6,26 +6,41 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/05 14:42:49 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:44:50 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/03 21:35:59 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libpf.intern.h"
 
-void		pfhandleint(t_arg *arg, t_flag *flag)
+t_ret	pfhandleint(t_arg *arg, t_flag flag)
 {
-	flag->finished = pfitostr(arg->l, 10, flag);
+	static char	num[MAXPRECISION + 1];
+	t_ret		ret;
+
+	ft_strcpy(ret.leading, "");
+	ft_itostrb(num, arg->l, 10, ft_min(MAXPRECISION, flag.precision));
+	ret.str = (!arg->l && flag.precision == 0) ? "" : num;
+	if ((long long)arg->l < 0)
+	{
+		ret.str++;
+		ft_strcpy(ret.leading, "-");
+	}
+	else if (flag.flags & FLAGBLANK)
+		ft_strcpy(ret.leading, " ");
+	else if (flag.flags & FLAGPLUS)
+		ft_strcpy(ret.leading, "+");
+	ret.size = ft_strlen(ret.str);
+	return (ret);
 }
 
-void		pfhandleuint(t_arg *arg, t_flag *flag)
+t_ret	pfhandleuint(t_arg *arg, t_flag flag)
 {
-	t_uint64 nb;
+	static char	num[MAXPRECISION + 1];
+	t_ret		ret;
 
-	nb = arg->l;
-	if (nb == 0 && flag->precision == 0)
-	{
-		flag->finished = ft_strdup("");
-		return ;
-	}
-	flag->finished = pfutostr(nb, 10, flag->precision);
+	ft_strcpy(ret.leading, "");
+	ft_utostrb(num, arg->l, 10, ft_min(MAXPRECISION, flag.precision));
+	ret.str = (!arg->l && flag.precision == 0) ? "" : num;
+	ret.size = ft_strlen(ret.str);
+	return (ret);
 }

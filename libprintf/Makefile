@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/02/25 18:59:34 by lroux            ###   ########.fr        #
+#    Updated: 2019/03/03 21:59:36 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,21 @@ INCDIR	:= incs
 SRCDIR	:= srcs
 OBJDIR	:= build/obj
 
-SRCS	:= wrappers.c handlers.c lexer.c map.c utils.c special.c \
-		   handlers/char.c handlers/int.c handlers/ptr.c \
-		   handlers/oct.c handlers/hex.c handlers/bonus.c \
-		   handlers/float.c
+SRCS	:= \
+			wrappers/printf.c \
+		   \
+			lexer.c map.c \
+			flag.c special.c \
+			entry.c \
+		   \
+			handlers/char.c handlers/int.c handlers/ptr.c \
+			handlers/oct.c handlers/hex.c handlers/bonus.c \
+			handlers/float.c
 
 LIBS	:= liblift
 LIBDIR	:= ..
+
+DEBUG	:= 1
 
 # Include core
 include $(LIBDIR)/lib.mk

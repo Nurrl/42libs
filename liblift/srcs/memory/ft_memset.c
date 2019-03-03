@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:05:49 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:53:51 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/26 21:30:47 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static size_t	memset8b(void **dst, unsigned char c)
 	return (8);
 }
 
-void			*vmemset(void *b, int c, size_t len)
+void			*ft_memset(void *b, int c, size_t len)
 {
 	char *init;
 

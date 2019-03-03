@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wrappers.c                                         :+:      :+:    :+:   */
+/*   printf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 11:48:40 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 17:22:03 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/03 19:45:53 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "stdio.h"
 #include "libpf.intern.h"
 
 int			ft_printf(const char *format, ...)
@@ -23,41 +24,23 @@ int			ft_printf(const char *format, ...)
 	return (rt);
 }
 
+static int	store(t_pf *env, const char *s, size_t size)
+{
+	(void)env;
+	return (write(stdout, s, size));
+}
+
+static int	storemove(t_pf *env, char **s, size_t size)
+{
+	*s += size;
+	return (env->store(env, *s - size, size));
+}
+
 int			ft_vprintf(const char *format, va_list ap)
 {
-	return (ft_vdprintf(1, format, ap));
-}
+	t_pf	env;
 
-int			ft_dprintf(int fd, const char *format, ...)
-{
-	va_list	ap;
-	int		rt;
-
-	va_start(ap, format);
-	rt = ft_vdprintf(fd, format, ap);
-	va_end(ap);
-	return (rt);
-}
-
-int			ft_vdprintf(int fd, const char *format, va_list ap)
-{
-	char	*ret;
-	int		len;
-
-	len = ft_vasprintf(&ret, format, ap);
-	write(fd, ret, len);
-	if (ret)
-		free(ret);
-	return (len);
-}
-
-int			ft_asprintf(char **ret, const char *format, ...)
-{
-	va_list	ap;
-	int		rt;
-
-	va_start(ap, format);
-	rt = ft_vasprintf(ret, format, ap);
-	va_end(ap);
-	return (rt);
+	env = (t_pf){0, &store, &storemove};
+	pfstart(&env, (char*)format, ap);
+	return (env.count);
 }

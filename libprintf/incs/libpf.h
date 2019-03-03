@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/01/14 15:25:26 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/03 19:01:01 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include <inttypes.h>
 # include <stdarg.h>
+# include <stdlib.h>
 
 /*
 ** Bonus list:
 **  Sizes 'z/t' and 'j'.
 **  %b -> Binary, works with flag '#', and sizes 'z/t' and 'j'.
-**  %r -> Non-printable, produces exact copy of `cat -e` for ascii range.
 **  %s -> With precision, if the string is cropped, it will add '..' at the end.
 **  '*' flag for width and precision.
 **  {<name>} -> Substitututions with colors/text.
@@ -65,15 +65,17 @@ typedef struct {
 	int		flags;
 	int		width;
 	int		precision;
-	char	*length;
+	int		length;
 	char	type;
-
-	char	*leading;
-	char	*finished;
-	int		len;
 }			t_flag;
 
-typedef void	(*t_handler)(t_arg*, t_flag*);
+typedef struct {
+	char	leading[3];
+	char	*str;
+	size_t	size;
+}			t_ret;
+
+typedef t_ret	(*t_handler)(t_arg*, t_flag);
 
 /*
 ** II - Exported fonctions
@@ -87,6 +89,11 @@ int			ft_vdprintf(int fd, const char *format, va_list ap);
 
 int			ft_asprintf(char **ret, const char *format, ...);
 int			ft_vasprintf(char **ret, const char *format, va_list ap);
+
+int			ft_snprintf(char *str,
+				size_t size, const char *format, ...);
+int			ft_vsnprintf(char *str,
+				size_t size, const char *format, va_list ap);
 
 void		ft_pfregister(char flag, t_handler handler, int type);
 

@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_min.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 17:27:06 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/26 21:29:43 by lroux            ###   ########.fr       */
+/*   Created: 2019/03/03 21:30:04 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/03 21:31:03 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lift/memory.h"
-#include "lift/types.h"
-#include <stdlib.h>
+#include "lift/math.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+long long	ft_min(long long a, long long b)
 {
-	while (n--)
-		if (*(t_uint8*)s1++ != *(t_uint8*)s2++)
-			return (*(t_uint8*)(s1 - 1) - *(t_uint8*)(s2 - 1));
-	return (0);
+	return ((a < b) ? a : b);
 }

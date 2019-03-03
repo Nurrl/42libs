@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/25 19:16:32 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/28 17:21:10 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,57 @@ static const t_subs g_subs[128] = {
 	{"right", "\x1b[C"},
 	{"left", "\x1b[D"},
 
-	{"42", "██╗  ██╗██████╗\n"
+	{"shrug", "¯\\_(ツ)_/¯"},
+	{"42",
+		"██╗  ██╗██████╗ \n"
 		"██║  ██║╚════██╗\n"
 		"███████║ █████╔╝\n"
-		"╚════██║██╔═══╝\n"
+		"╚════██║██╔═══╝ \n"
 		"     ██║███████╗\n"
 		"     ╚═╝╚══════╝"},
-	{"shrug", "¯\\_(ツ)_/¯"},
+	{"doge",
+		"         ▄              ▄    \n"
+		"        ▌▒█           ▄▀▒▌   \n"
+		"        ▌▒▒█        ▄▀▒▒▒▐   \n"
+		"       ▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐   \n"
+		"     ▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐   \n"
+		"   ▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌   \n"
+		"  ▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌  \n"
+		"  ▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐  \n"
+		" ▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌ \n"
+		" ▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌ \n"
+		"▐▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐ \n"
+		"▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌\n"
+		"▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐ \n"
+		" ▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌ \n"
+		" ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐  \n"
+		"  ▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌  \n"
+		"    ▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀   \n"
+		"      ▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀     \n"
+		"         ▒▒▒▒▒▒▒▒▒▒▀▀        \n"
+	},
 	{NULL, NULL}
 };
 
-static t_flag	*colorrgb(char **format, t_flag *flag)
+static t_bool	colorrgb(t_pf *env, char *key)
 {
-	(void)format;
-	(void)flag;
-	return (flag);
+	(void)key;
+	(void)env;
+	return (false);
 }
 
-static t_flag	*color256(char **format, t_flag *flag)
+static t_bool	color256(t_pf *env, char *key)
 {
-	(void)format;
-	(void)flag;
-	return (flag);
+	key += 6;
+	if (!*key || !ft_stris(key, &ft_isdigit))
+		return (false);
+	env->count += env->store(env, "\x1b[38;5;", 7);
+	env->count += env->store(env, key, ft_strlen(key));
+	env->count += env->store(env, "m", 1);
+	return (true);
 }
 
-static t_flag	*subs(char *start, char *key, char **format, t_flag *flag)
+static t_bool	subs(t_pf *env, char *key)
 {
 	int i;
 
@@ -76,34 +102,42 @@ static t_flag	*subs(char *start, char *key, char **format, t_flag *flag)
 	while (g_subs[++i].key)
 		if (ft_strequ(g_subs[i].key, key))
 			break ;
-	free(key);
-	if (!g_subs[i].key && ++(*format))
-	{
-		flag->finished = "{";
-		flag->len = 1;
-		*format = start + 1;
-		return (flag);
-	}
-	flag->len = ft_strlen(g_subs[i].value);
-	flag->finished = g_subs[i].value;
-	(*format)++;
-	return (flag);
+	if (!g_subs[i].key)
+		return (false);
+	env->count += env->store(env, g_subs[i].value,
+			ft_strlen(g_subs[i].value));
+	return (true);
 }
 
-t_flag			*pfspecial(char **format, t_flag *flag)
+static t_bool	dosubstitute(t_pf *env, char *key)
+{
+	if (ft_strnequ(key, "color;", 6))
+	{
+		if (ft_strcc(key, ';') == 3)
+			return (colorrgb(env, key));
+		else
+			return (color256(env, key));
+	}
+	else
+		return (subs(env, key));
+}
+
+void			pfspecial(t_pf *env, char **format, va_list ap)
 {
 	char	*start;
 	char	*key;
 
+	(void)ap;
 	start = *format;
+	key = NULL;
 	while (**format && **format != '}')
 		(*format)++;
-	if (!**format || !(key = ft_strndup(start + 1, *format - start - 1)))
-		return (NULL);
-	if (ft_strnequ(key, "color;", 6))
-		return ((ft_strcc(key, ';') == 1)
-			? color256(format, flag)
-			: colorrgb(format, flag));
-	else
-		return (subs(start, key, format, flag));
+	if (!**format || !(key = ft_strndup(start + 1, *format - start - 1))
+			|| !dosubstitute(env, key))
+	{
+		*format = start;
+		env->count = env->store(env, *format, 1);
+	}
+	(*format)++;
+	free(key);
 }

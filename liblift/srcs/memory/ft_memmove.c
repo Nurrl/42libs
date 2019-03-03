@@ -6,14 +6,14 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:59:44 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:53:23 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/26 21:30:38 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lift/memory.h"
 #include <stdlib.h>
 
-void	*vmemmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t initlen;
 

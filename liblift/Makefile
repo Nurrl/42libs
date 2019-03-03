@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/02/24 22:32:35 by lroux            ###   ########.fr        #
+#    Updated: 2019/03/03 21:31:48 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,13 +39,16 @@ SRCS	:= \
 			list/ll_get.c \
 			list/ll_pop.c \
 		   \
+			math/ft_min.c \
 			math/ft_atoi.c \
 			math/ft_intlen.c \
 			math/ft_itostr.c \
+			math/ft_itostrb.c \
 			math/ft_pow.c \
 			math/ft_sqrt.c \
 			math/ft_uintlen.c \
 			math/ft_utostr.c \
+			math/ft_utostrb.c \
 			math/ft_strtoll.c \
 		   \
 			memory/ft_bzero.c \

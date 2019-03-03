@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:51:41 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/24 22:48:34 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/03 19:19:38 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef unsigned int	t_uint32;
 
 typedef signed long long int	t_int64;
 typedef unsigned long long int	t_uint64;
+
+typedef unsigned char	t_byte;
 
 /*
 ** Implementation of boolean type in C,

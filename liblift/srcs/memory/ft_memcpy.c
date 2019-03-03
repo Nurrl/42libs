@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:15:54 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:51:53 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/26 21:30:29 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static size_t	memcpy8b(void **dst, const void **src)
 	return (8);
 }
 
-void			*vmemcpy(void *dst, const void *src, size_t n)
+void			*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	char *init;
 

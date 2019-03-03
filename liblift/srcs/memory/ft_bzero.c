@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:13:38 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:46:01 by lroux            ###   ########.fr       */
+/*   Updated: 2019/02/26 21:29:57 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static size_t	bzero8b(void **dst)
 	return (8);
 }
 
-void			vbzero(void *s, size_t n)
+void			ft_bzero(void *s, size_t n)
 {
 	while (n)
 	{
