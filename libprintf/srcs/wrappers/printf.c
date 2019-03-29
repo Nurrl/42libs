@@ -6,12 +6,17 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 11:48:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/03 19:45:53 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/29 18:50:36 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdio.h"
+#include <stdio.h>
 #include "libpf.intern.h"
+
+static int	flush(char *buf, size_t size)
+{
+	return (write(stdout, buf, size));
+}
 
 int			ft_printf(const char *format, ...)
 {
@@ -24,23 +29,14 @@ int			ft_printf(const char *format, ...)
 	return (rt);
 }
 
-static int	store(t_pf *env, const char *s, size_t size)
-{
-	(void)env;
-	return (write(stdout, s, size));
-}
-
-static int	storemove(t_pf *env, char **s, size_t size)
-{
-	*s += size;
-	return (env->store(env, *s - size, size));
-}
-
 int			ft_vprintf(const char *format, va_list ap)
 {
 	t_pf	env;
+	char	buf[BUFSIZE + 1];
 
-	env = (t_pf){0, &store, &storemove};
+	env = (t_pf){0, NULL, NULL, &flush, buf, 0};
 	pfstart(&env, (char*)format, ap);
+	env.count += flush(env.buf, env.size);
+	env.size = 0;
 	return (env.count);
 }

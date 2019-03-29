@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/28 17:21:10 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/29 18:42:22 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ static t_bool	color256(t_pf *env, char *key)
 	key += 6;
 	if (!*key || !ft_stris(key, &ft_isdigit))
 		return (false);
-	env->count += env->store(env, "\x1b[38;5;", 7);
-	env->count += env->store(env, key, ft_strlen(key));
-	env->count += env->store(env, "m", 1);
+	env->store(env, "\x1b[38;5;", 7);
+	env->store(env, key, ft_strlen(key));
+	env->store(env, "m", 1);
 	return (true);
 }
 
@@ -104,7 +104,7 @@ static t_bool	subs(t_pf *env, char *key)
 			break ;
 	if (!g_subs[i].key)
 		return (false);
-	env->count += env->store(env, g_subs[i].value,
+	env->store(env, g_subs[i].value,
 			ft_strlen(g_subs[i].value));
 	return (true);
 }
@@ -136,7 +136,7 @@ void			pfspecial(t_pf *env, char **format, va_list ap)
 			|| !dosubstitute(env, key))
 	{
 		*format = start;
-		env->count = env->store(env, *format, 1);
+		env->store(env, *format, 1);
 	}
 	(*format)++;
 	free(key);

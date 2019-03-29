@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 15:58:30 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/03 18:09:45 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/29 19:35:11 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,10 @@ static void		pfpad(t_pf *env, size_t size, char c)
 	ft_memset(pad, c, (size > sizeof(pad)) ? sizeof(pad) : size);
 	while (size >= sizeof(pad))
 	{
-		env->count += env->store(env, pad, sizeof(pad));
+		env->store(env, pad, sizeof(pad));
 		size -= sizeof(pad);
 	}
-	env->count += env->store(env, pad, size);
-}
-
-void			pfflag(t_pf *env, char **format, va_list ap)
-{
-	t_flag	flag;
-	t_arg	arg;
-	t_ret	ret;
-	t_bool	dopad;
-
-	if (pflexer(&flag, format, ap))
-		ret = pfcall(flag, &arg, ap);
-	else
-		ret = (t_ret){{0, 0, 0}, *format, 1};
-	if (flag.flags & FLAGZERO)
-		env->count += env->store(env, ret.leading, ft_strlen(ret.leading));
-	dopad = (flag.width != -1 && flag.width
-				> (int)(ret.size + ft_strlen(ret.leading)));
-	if (dopad && !(flag.flags & FLAGMINUS))
-		pfpad(env, flag.width - (ret.size + ft_strlen(ret.leading)),
-				(flag.flags & FLAGZERO && flag.precision == -1) ? '0' : ' ');
-	if (!(flag.flags & FLAGZERO))
-		env->count += env->store(env, ret.leading, ft_strlen(ret.leading));
-	env->count += env->store(env, ret.str, ret.size);
-	if (dopad && (flag.flags & FLAGMINUS))
-		pfpad(env, flag.width - (int)(ret.size + ft_strlen(ret.leading)),
-				(flag.flags & FLAGZERO && flag.precision == -1) ? '0' : ' ');
-	(*format)++;
+	env->store(env, pad, size);
 }
 
 void			pfflaglen(t_flag *flag, char *dum, char **format)
@@ -84,4 +57,33 @@ void			pfflaglen(t_flag *flag, char *dum, char **format)
 		flag->length = JPRE;
 	else
 		flag->length = BARE;
+}
+
+void			pfflag(t_pf *env, char **format, va_list ap)
+{
+	t_flag	flag;
+	t_arg	arg;
+	t_ret	ret;
+	t_bool	dopad;
+
+	if (pflexer(&flag, format, ap))
+		ret = pfcall(flag, &arg, ap);
+	else if (!**format)
+		return ;
+	else
+		ret = (t_ret){{0, 0, 0}, *format, 1};
+	if (flag.flags & FLAGZERO)
+		env->store(env, ret.leading, ft_strlen(ret.leading));
+	dopad = (flag.width != -1 && flag.width
+				> (int)(ret.size + ft_strlen(ret.leading)));
+	if (dopad && !(flag.flags & FLAGMINUS))
+		pfpad(env, flag.width - (ret.size + ft_strlen(ret.leading)),
+				(flag.flags & FLAGZERO && flag.precision == -1) ? '0' : ' ');
+	if (!(flag.flags & FLAGZERO))
+		env->store(env, ret.leading, ft_strlen(ret.leading));
+	env->store(env, ret.str, ret.size);
+	if (dopad && (flag.flags & FLAGMINUS))
+		pfpad(env, flag.width - (int)(ret.size + ft_strlen(ret.leading)),
+				(flag.flags & FLAGZERO && flag.precision == -1) ? '0' : ' ');
+	(*format)++;
 }

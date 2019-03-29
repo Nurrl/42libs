@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/03 21:15:00 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/29 18:48:47 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 
 # define MAXPRECISION 2048
 
+# define BUFSIZE 4096
+
 /*
 ** Printf substitutions(Bonus)
 ** Format: {<key>}
@@ -56,8 +58,13 @@ typedef struct	s_subs {
 typedef struct	s_pf {
 	int		count;
 
-	int		(*store)(struct s_pf *env, const char *s, size_t len);
-	int		(*storemove)(struct s_pf *env, char **s, size_t len);
+	void	(*store)(struct s_pf *env, const char *s, size_t len);
+	void	(*storemove)(struct s_pf *env, char **s, size_t len);
+
+	int		(*flush)(char *buf, size_t size);
+
+	char	*buf;
+	size_t	size;
 }				t_pf;
 
 /*

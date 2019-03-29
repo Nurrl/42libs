@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/03/03 21:59:36 by lroux            ###   ########.fr        #
+#    Updated: 2019/03/29 18:33:38 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS	:= \
 LIBS	:= liblift
 LIBDIR	:= ..
 
-DEBUG	:= 1
+#DEBUG	:= 1
 
 # Include core
 include $(LIBDIR)/lib.mk
