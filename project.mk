@@ -5,8 +5,6 @@ $(NAME): $(LIBFILES) $(OBJS)
 	@$(LD) $(OBJS) $(LDFLAGS) -o $(NAME)
 	$(_BLANK)
 	@echo -n "$(_HEAD)$(_GREEN)✔$(_END) $(NAME)"
-ifdef LNKNAME
-	@$(LN) $(NAME) $(LNKNAME)
-	@echo -n " $(_CYAN)⬅$(_END) $(LNKNAME)"
-endif
+ifndef LNKNAME
 	@echo
+endif

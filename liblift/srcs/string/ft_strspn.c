@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strspn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/08 15:29:45 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/11 18:30:21 by lroux            ###   ########.fr       */
+/*   Created: 2019/03/16 15:25:27 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/20 16:57:34 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "lift/char.h"
 #include "lift/string.h"
 
-char	*ft_strtrim(const char *s, int (*check)(int))
+size_t	ft_strspn(const char *s, const char *charset)
 {
-	char *end;
+	char *start;
 
-	if (!s)
-		return (NULL);
-	while (check(*s))
+	start = (char*)s;
+	while (*s)
+	{
+		if (!ft_inset(*s, charset))
+			break ;
 		++s;
-	if (!*s)
-		return ((char*)s);
-	end = (char*)(s + ft_strlen(s) - 1);
-	while (check(*end))
-		end--;
-	end[1] = '\0';
-	return ((char*)s);
+	}
+	return (s - start);
 }
