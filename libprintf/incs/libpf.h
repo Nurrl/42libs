@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/03 19:01:01 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 21:46:14 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,27 @@
 # include <stdlib.h>
 
 /*
-** Bonus list:
-**  Sizes 'z/t' and 'j'.
-**  %b -> Binary, works with flag '#', and sizes 'z/t' and 'j'.
-**  %s -> With precision, if the string is cropped, it will add '..' at the end.
-**  '*' flag for width and precision.
-**  {<name>} -> Substitututions with colors/text.
-**  ft_pfregister(); -> Register new converters *WOW*.
+** Bonuses:
+** -- U: Unrealizable for now; x: Done; /:Working but not ok.
+**  [x] Sizes 'z/t' and 'j'.
+**  [x] %b -> Binary, works with flag '#', and sizes 'z/t' and 'j'.
+**  [U] %s
+**    -> With precision, if the string is cropped, it will add '..' at the end.
+**  [x] %m -> Return of `strerror()`, converts an int, for errno. Passive leak.
+**  [U] %n
+**    -> Sets the int value to the current written bytes throught an int*.
+**  [ ] %f -> Working floats.
+**  [U] %r -> Produces `cat -e` exact output.
+**  [x]'*' flag for width and precision.
+**  [x] {<name>} -> Substitututions with colors/text.
+**  [/] {color;<256code>} -> For 256 color codes.
+**  [/] {color;<r>;<g>;<b>} -> For RGB color codes.
+**  [x] ft_printf()/ft_vprintf();     -> stdout
+**  [x] ft_dprintf()/ft_vdprintf();   -> to file descriptor
+**  [x] ft_sdprintf()/ft_vsdprintf(); -> to socket descriptor
+**  [x] ft_snprintf()/ft_vsnprintf(); -> to string with len
+**  [x] ft_asprintf()/ft_vasprintf(); -> to malloc'd string
+**  [x] ft_pfreg(); -> Register new converters *WOW*.
 */
 
 /*
@@ -32,6 +46,7 @@
 */
 
 enum {
+	UNSET = 0,
 	PTR, UIPTR,
 	CHAR, UCHAR,
 	SHORT, USHORT,
@@ -56,8 +71,8 @@ typedef union {
 ** (Source: Wikipedia.org)
 **
 ** - `leading` is a string containing the leading chars of the *number*.
-** - `finished` is a string containing the finished converted form of the arg.
-** - `len` is an in containing the length of the `finished` var, in case we
+** - `str` is a string containing the finished converted form of the arg.
+** - `size` is containing the size, in bytes of `str`, in case we
 **  want to print a `\0`.
 */
 typedef struct {
@@ -87,14 +102,17 @@ int			ft_vprintf(const char *format, va_list ap);
 int			ft_dprintf(int fd, const char *format, ...);
 int			ft_vdprintf(int fd, const char *format, va_list ap);
 
-int			ft_asprintf(char **ret, const char *format, ...);
-int			ft_vasprintf(char **ret, const char *format, va_list ap);
+int			ft_sdprintf(int sockd, int flags, const char *format, ...);
+int			ft_vsdprintf(int sockd, int flags, const char *format, va_list ap);
 
 int			ft_snprintf(char *str,
 				size_t size, const char *format, ...);
 int			ft_vsnprintf(char *str,
 				size_t size, const char *format, va_list ap);
 
-void		ft_pfregister(char flag, t_handler handler, int type);
+int			ft_asprintf(char **ret, const char *format, ...);
+int			ft_vasprintf(char **ret, const char *format, va_list ap);
+
+void		ft_pfreg(char type, t_handler handler, int length);
 
 #endif

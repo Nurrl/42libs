@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 20:18:44 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/03 17:52:56 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 00:38:28 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_handler g_handlers['z' - '@' + 1] = {
 	[('p' - '@')] = &pfhandleptr,
 
 	[('b' - '@')] = &pfhandlebin,
+	[('m' - '@')] = &pfhandleserr,
 };
 
 /*
@@ -48,6 +49,7 @@ static unsigned char	g_types[MAX]['z' - '@' + 1] = {
 		[('p' - '@')] = UIPTR,
 
 		[('b' - '@')] = UINT,
+		[('m' - '@')] = INT,
 	},
 /*
 ** 1: l-prefixed
@@ -190,7 +192,10 @@ static void			pfpop(t_arg *arg, int type, va_list ap)
 
 t_ret				pfcall(t_flag flag, t_arg *arg, va_list ap)
 {
-	pfpop(arg, g_types[flag.length][flag.type - '@'], ap);
+	if (g_types[flag.length][flag.type - '@'] == UNSET)
+		pfpop(arg, g_types[BARE][flag.type - '@'], ap);
+	else
+		pfpop(arg, g_types[flag.length][flag.type - '@'], ap);
 	return (g_handlers[flag.type - '@'](arg, flag));
 }
 
@@ -199,10 +204,7 @@ t_bool				pfisvalid(char type)
 	return ((type - '@' > -1) && !!g_handlers[type - '@']);
 }
 
-void				ft_pfregister(
-		char type,
-		t_handler handler,
-		int length)
+void				ft_pfreg(char type, t_handler handler, int length)
 {
 	if (type - '@' > 'z' - '@' + 1 || !handler)
 		return ;

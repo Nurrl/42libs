@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:13:38 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/26 21:29:57 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 22:25:05 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,28 @@
 
 static size_t	bzero1b(void **dst)
 {
-	*((t_uint8*)*dst) = 0;
+	*((t_u8*)*dst) = 0;
 	*dst += 1;
 	return (1);
 }
 
 static size_t	bzero2b(void **dst)
 {
-	*((t_uint16*)*dst) = 0;
+	*((t_u16*)*dst) = 0;
 	*dst += 2;
 	return (2);
 }
 
 static size_t	bzero4b(void **dst)
 {
-	*((t_uint32*)*dst) = 0;
+	*((t_u32*)*dst) = 0;
 	*dst += 4;
 	return (4);
 }
 
 static size_t	bzero8b(void **dst)
 {
-	*((t_uint64*)*dst) = 0;
+	*((t_u64*)*dst) = 0;
 	*dst += 8;
 	return (8);
 }

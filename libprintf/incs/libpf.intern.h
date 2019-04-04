@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/29 18:48:47 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/01 23:31:00 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,6 @@ typedef struct	s_subs {
 typedef struct	s_pf {
 	int		count;
 
-	void	(*store)(struct s_pf *env, const char *s, size_t len);
-	void	(*storemove)(struct s_pf *env, char **s, size_t len);
-
 	int		(*flush)(char *buf, size_t size);
 
 	char	*buf;
@@ -72,6 +69,8 @@ typedef struct	s_pf {
 */
 
 void			pfstart(t_pf *env, char *format, va_list ap);
+void			pfstore(t_pf *env, const char *s, size_t size);
+void			pfstoremove(t_pf *env, char **s, size_t size);
 
 void			pfspecial(t_pf *env, char **format, va_list ap);
 void			pfflag(t_pf *env, char **format, va_list ap);
@@ -106,5 +105,6 @@ t_ret			pfhandlehex(t_arg *arg, t_flag flag);
 t_ret			pfhandlehexup(t_arg *arg, t_flag flag);
 
 t_ret			pfhandlebin(t_arg *arg, t_flag flag);
+t_ret			pfhandleserr(t_arg *arg, t_flag flag);
 
 #endif

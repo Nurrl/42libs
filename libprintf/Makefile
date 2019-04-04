@@ -6,11 +6,11 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/03/29 18:33:38 by lroux            ###   ########.fr        #
+#    Updated: 2019/04/04 15:50:10 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= libprintf
+PROJECT	:= "<L> libprintf :"
 NAME	:= build/$(PROJECT).a
 LNKNAME	:= $(PROJECT).a
 
@@ -20,6 +20,10 @@ OBJDIR	:= build/obj
 
 SRCS	:= \
 			wrappers/printf.c \
+			wrappers/dprintf.c \
+			wrappers/sdprintf.c \
+			wrappers/snprintf.c \
+			wrappers/asprintf.c \
 		   \
 			lexer.c map.c \
 			flag.c special.c \
