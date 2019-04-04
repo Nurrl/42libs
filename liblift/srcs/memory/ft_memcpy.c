@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 16:15:54 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/26 21:30:29 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 22:27:51 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static size_t	memcpy1b(void **dst, const void **src)
 {
-	*((t_uint8*)*dst) = *((t_uint8*)*src);
+	*((t_u8*)*dst) = *((t_u8*)*src);
 	*dst += 1;
 	*src += 1;
 	return (1);
@@ -24,7 +24,7 @@ static size_t	memcpy1b(void **dst, const void **src)
 
 static size_t	memcpy2b(void **dst, const void **src)
 {
-	*((t_uint16*)*dst) = *((t_uint16*)*src);
+	*((t_u16*)*dst) = *((t_u16*)*src);
 	*dst += 2;
 	*src += 2;
 	return (2);
@@ -32,7 +32,7 @@ static size_t	memcpy2b(void **dst, const void **src)
 
 static size_t	memcpy4b(void **dst, const void **src)
 {
-	*((t_uint32*)*dst) = *((t_uint32*)*src);
+	*((t_u32*)*dst) = *((t_u32*)*src);
 	*dst += 4;
 	*src += 4;
 	return (4);
@@ -40,7 +40,7 @@ static size_t	memcpy4b(void **dst, const void **src)
 
 static size_t	memcpy8b(void **dst, const void **src)
 {
-	*((t_uint64*)*dst) = *((t_uint64*)*src);
+	*((t_u64*)*dst) = *((t_u64*)*src);
 	*dst += 8;
 	*src += 8;
 	return (8);

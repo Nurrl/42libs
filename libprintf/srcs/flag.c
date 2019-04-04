@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 15:58:30 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/29 19:35:11 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/01 19:41:59 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static void		pfpad(t_pf *env, size_t size, char c)
 	ft_memset(pad, c, (size > sizeof(pad)) ? sizeof(pad) : size);
 	while (size >= sizeof(pad))
 	{
-		env->store(env, pad, sizeof(pad));
+		pfstore(env, pad, sizeof(pad));
 		size -= sizeof(pad);
 	}
-	env->store(env, pad, size);
+	pfstore(env, pad, size);
 }
 
 void			pfflaglen(t_flag *flag, char *dum, char **format)
@@ -73,15 +73,15 @@ void			pfflag(t_pf *env, char **format, va_list ap)
 	else
 		ret = (t_ret){{0, 0, 0}, *format, 1};
 	if (flag.flags & FLAGZERO)
-		env->store(env, ret.leading, ft_strlen(ret.leading));
+		pfstore(env, ret.leading, ft_strlen(ret.leading));
 	dopad = (flag.width != -1 && flag.width
 				> (int)(ret.size + ft_strlen(ret.leading)));
 	if (dopad && !(flag.flags & FLAGMINUS))
 		pfpad(env, flag.width - (ret.size + ft_strlen(ret.leading)),
 				(flag.flags & FLAGZERO && flag.precision == -1) ? '0' : ' ');
 	if (!(flag.flags & FLAGZERO))
-		env->store(env, ret.leading, ft_strlen(ret.leading));
-	env->store(env, ret.str, ret.size);
+		pfstore(env, ret.leading, ft_strlen(ret.leading));
+	pfstore(env, ret.str, ret.size);
 	if (dopad && (flag.flags & FLAGMINUS))
 		pfpad(env, flag.width - (int)(ret.size + ft_strlen(ret.leading)),
 				(flag.flags & FLAGZERO && flag.precision == -1) ? '0' : ' ');

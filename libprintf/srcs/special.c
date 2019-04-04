@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/29 18:42:22 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 21:42:02 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static const t_subs g_subs[128] = {
 	{"right", "\x1b[C"},
 	{"left", "\x1b[D"},
 
+	{"flip", "(╯°□°）╯︵ ┻━┻"},
+	{"tidy", "┬─┬⃰͡`(ᵔᵕᵔ͜ )"},
 	{"shrug", "¯\\_(ツ)_/¯"},
 	{"42",
 		"██╗  ██╗██████╗ \n"
@@ -78,9 +80,13 @@ static const t_subs g_subs[128] = {
 
 static t_bool	colorrgb(t_pf *env, char *key)
 {
-	(void)key;
-	(void)env;
-	return (false);
+	key += 6;
+	if (!*key)
+		return (false);
+	pfstore(env, "\x1b[38;2;", 7);
+	pfstore(env, key, ft_strlen(key));
+	pfstore(env, "m", 1);
+	return (true);
 }
 
 static t_bool	color256(t_pf *env, char *key)
@@ -88,9 +94,9 @@ static t_bool	color256(t_pf *env, char *key)
 	key += 6;
 	if (!*key || !ft_stris(key, &ft_isdigit))
 		return (false);
-	env->store(env, "\x1b[38;5;", 7);
-	env->store(env, key, ft_strlen(key));
-	env->store(env, "m", 1);
+	pfstore(env, "\x1b[38;5;", 7);
+	pfstore(env, key, ft_strlen(key));
+	pfstore(env, "m", 1);
 	return (true);
 }
 
@@ -104,13 +110,14 @@ static t_bool	subs(t_pf *env, char *key)
 			break ;
 	if (!g_subs[i].key)
 		return (false);
-	env->store(env, g_subs[i].value,
+	pfstore(env, g_subs[i].value,
 			ft_strlen(g_subs[i].value));
 	return (true);
 }
 
-static t_bool	dosubstitute(t_pf *env, char *key)
+static t_bool	dosubstitute(t_pf *env, char *key, va_list ap)
 {
+	(void)ap;
 	if (ft_strnequ(key, "color;", 6))
 	{
 		if (ft_strcc(key, ';') == 3)
@@ -127,16 +134,15 @@ void			pfspecial(t_pf *env, char **format, va_list ap)
 	char	*start;
 	char	*key;
 
-	(void)ap;
 	start = *format;
 	key = NULL;
 	while (**format && **format != '}')
 		(*format)++;
 	if (!**format || !(key = ft_strndup(start + 1, *format - start - 1))
-			|| !dosubstitute(env, key))
+			|| !dosubstitute(env, key, ap))
 	{
 		*format = start;
-		env->store(env, *format, 1);
+		pfstore(env, *format, 1);
 	}
 	(*format)++;
 	free(key);
