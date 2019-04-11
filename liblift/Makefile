@@ -6,13 +6,14 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/04/04 15:49:43 by lroux            ###   ########.fr        #
+#    Updated: 2019/04/10 21:40:24 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= "<L> liblift :"
-NAME	:= build/liblift.a
-LNKNAME	:= liblift.a
+PROJECT	:= "\<\> liblift :"
+EX		:= liblift
+NAME	:= build/$(EX).a
+LNKNAME	:= $(EX).a
 
 INCDIR	:= incs
 SRCDIR	:= srcs
@@ -64,6 +65,8 @@ SRCS	:= \
 			memory/ft_memset.c \
 			memory/ft_mk2array.c \
 			memory/ft_realloc.c \
+			memory/ft_bswp16.c \
+			memory/ft_bswp32.c \
 		   \
 			string/ft_strcc.c \
 			string/ft_strncc.c \

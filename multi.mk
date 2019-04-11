@@ -12,23 +12,26 @@ include $(LIBDIR)/defines.mk
 ifndef SUBDIR
     $(error Variable SUBDIR is not set (dir containaing the subprojects).)
 endif
-ifndef SUBS
-    $(error Variable SUBS is not set (list of subprojects).)
+ifndef PROJS
+    $(error Variable PROJS is not set (list of subprojects).)
 endif
 
-all: $(SUBS)
+NAME	?= multi
+
+$(NAME): all
+all: $(PROJS)
 
 eclean:
-	@$(foreach path, $(SUBS), make -C $(SUBDIR)/$(path) $@${\n})
+	@$(foreach proj, $(PROJS), make -C $(SUBDIR)/${PATHS.${proj}} $@${\n})
 
 clean:
-	@$(foreach path, $(SUBS), make -C $(SUBDIR)/$(path) $@${\n})
+	@$(foreach proj, $(PROJS), make -C $(SUBDIR)/${PATHS.${proj}} $@${\n})
 
 fclean: eclean clean
 
 re: fclean all
 
-$(SUBS):
-	@$(foreach path, $(SUBS), make -C $(SUBDIR)/$(path) all${\n})
+$(PROJS):
+	@make -C $(SUBDIR)/${PATHS.${@}} all
 
-.PHONY: all $(SUBS) eclean clean fclean re
+.PHONY: all $(NAME) $(PROJS) eclean clean fclean re

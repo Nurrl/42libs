@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ll_add.c                                           :+:      :+:    :+:   */
+/*   ft_bswp32.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/14 07:09:02 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/05 15:15:54 by lroux            ###   ########.fr       */
+/*   Created: 2019/04/05 18:27:03 by lroux             #+#    #+#             */
+/*   Updated: 2019/04/05 18:27:16 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lift/list.h"
+#include "lift/types.h"
 #include "lift/memory.h"
 
-void	ll_add(t_node **head, void *data)
+t_u32	ft_bswp32(t_u32 val)
 {
-	t_node *new;
-
-	if (!data || !(new = ft_calloc(1, sizeof(*new))))
-		return ;
-	new->data = data;
-	if (!*head)
-		new->next = new;
-	else
-		new->next = *head;
-	if (!*head)
-		new->prev = new;
-	else
-		new->prev = (*head)->prev;
-	if (!*head)
-		*head = new;
-	(*head)->prev->next = new;
-	(*head)->prev = new;
+	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
+	return (val << 16) | (val >> 16);
 }

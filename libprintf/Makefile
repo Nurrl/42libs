@@ -6,13 +6,14 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/04/02 20:45:26 by lroux            ###   ########.fr        #
+#    Updated: 2019/04/10 21:39:16 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= libprintf
-NAME	:= build/$(PROJECT).a
-LNKNAME	:= $(PROJECT).a
+PROJECT	:= "\<\> libprintf :"
+EX		:= libprintf
+NAME	:= build/$(EX).a
+LNKNAME	:= $(EX).a
 
 INCDIR	:= incs
 SRCDIR	:= srcs
