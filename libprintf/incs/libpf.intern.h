@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/01 23:31:00 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/11 20:00:49 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,13 @@ typedef struct	s_pf {
 	char	*buf;
 	size_t	size;
 }				t_pf;
+
+typedef struct	s_float {
+	t_u64	frac:	63;
+	t_byte	integ:	1;
+	t_u16	exp:	15;
+	t_byte	sign:	1;
+}				t_float;
 
 /*
 ** Internal functions
