@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 15:25:48 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/11 20:18:45 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/24 18:14:35 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@
 ** - https://www.geeksforgeeks.org/bit-fields-c/
 */
 
+#include <stdio.h>
 t_ret	pfhandlefloat(t_arg *arg, t_flag flag)
 {
-//	static char	num[MAXPRECISION + 1];
+	static char	num[MAXPRECISION + 1];
 	t_ret		ret;
 	t_float		*flot;
 
@@ -50,9 +51,9 @@ t_ret	pfhandlefloat(t_arg *arg, t_flag flag)
 		flag.precision = 6;
 	/* Line of touch */
 	if (!ret.str)
-		ft_asprintf(&ret.str,
-				" <- sign\nexp:  %#.15hb\n"
-				"frac: %#.63llb", flot->exp, flot->frac);
+		; // Do process
+	if (!ret.str)
+		ret.str = num;
 	ret.size = ft_strlen(ret.str);
 	return (ret);
 }
