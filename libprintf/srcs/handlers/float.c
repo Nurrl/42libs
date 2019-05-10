@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 15:25:48 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/24 18:14:35 by lroux            ###   ########.fr       */
+/*   Updated: 2019/05/10 11:58:56 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@
 ** - https://www.geeksforgeeks.org/bit-fields-c/
 */
 
-#include <stdio.h>
-t_ret	pfhandlefloat(t_arg *arg, t_flag flag)
+static void	processfloat(void)
+{
+}
+
+t_ret		pfhandlefloat(t_arg *arg, t_flag flag)
 {
 	static char	num[MAXPRECISION + 1];
 	t_ret		ret;
@@ -49,9 +52,8 @@ t_ret	pfhandlefloat(t_arg *arg, t_flag flag)
 		ret.str = "nan";
 	if (flag.precision == -1)
 		flag.precision = 6;
-	/* Line of touch */
 	if (!ret.str)
-		; // Do process
+		processfloat();
 	if (!ret.str)
 		ret.str = num;
 	ret.size = ft_strlen(ret.str);
