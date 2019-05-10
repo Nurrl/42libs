@@ -10,9 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= libprintf
-NAME	:= build/$(PROJECT).a
-LNKNAME	:= $(PROJECT).a
+PROJECT	:= "\<\> libprintf :"
+EX		:= libprintf
+NAME	:= build/$(EX).a
+LNKNAME	:= $(EX).a
 
 INCDIR	:= incs
 SRCDIR	:= srcs

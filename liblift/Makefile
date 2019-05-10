@@ -6,19 +6,21 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/03/03 21:31:48 by lroux            ###   ########.fr        #
+#    Updated: 2019/04/10 21:40:24 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= liblift
-NAME	:= build/$(PROJECT).a
-LNKNAME	:= $(PROJECT).a
+PROJECT	:= "\<\> liblift :"
+EX		:= liblift
+NAME	:= build/$(EX).a
+LNKNAME	:= $(EX).a
 
 INCDIR	:= incs
 SRCDIR	:= srcs
 OBJDIR	:= build/obj
 
 SRCS	:= \
+			char/ft_inset.c \
 			char/ft_isalnum.c \
 			char/ft_isalpha.c \
 			char/ft_isascii.c \
@@ -38,6 +40,7 @@ SRCS	:= \
 			list/ll_len.c \
 			list/ll_get.c \
 			list/ll_pop.c \
+			list/ll_shift.c \
 		   \
 			math/ft_min.c \
 			math/ft_atoi.c \
@@ -62,8 +65,11 @@ SRCS	:= \
 			memory/ft_memset.c \
 			memory/ft_mk2array.c \
 			memory/ft_realloc.c \
+			memory/ft_bswp16.c \
+			memory/ft_bswp32.c \
 		   \
 			string/ft_strcc.c \
+			string/ft_strncc.c \
 			string/ft_strcw.c \
 			string/ft_strcat.c \
 			string/ft_strchr.c \
@@ -95,7 +101,14 @@ SRCS	:= \
 			string/ft_strsplit.c \
 			string/ft_strstr.c \
 			string/ft_strsub.c \
+			string/ft_strrep.c \
+			string/ft_strnrep.c \
+			string/ft_strspn.c \
+			string/ft_strnspn.c \
+			string/ft_strcspn.c \
+			string/ft_strncspn.c \
 			string/ft_strtrim.c \
+			string/ft_strtok.c \
 			string/ft_strupr.c \
 
 LIBS	:=

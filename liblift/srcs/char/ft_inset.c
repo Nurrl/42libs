@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcc.c                                         :+:      :+:    :+:   */
+/*   ft_inset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/18 19:53:50 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/20 19:20:50 by lroux            ###   ########.fr       */
+/*   Created: 2019/03/16 15:35:18 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/16 15:46:27 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcc(const char *s, char c)
+int	ft_inset(int c, const char *charset)
 {
-	int count;
-
-	if (!s)
-		return (0);
-	count = 0;
-	while (*s)
-		if (*s++ == c)
-			count++;
-	return (count);
+	while (*charset)
+		if (c == *(charset++))
+			return (1);
+	return (0);
 }

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*   ft_strncc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/08 15:29:45 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/11 18:30:21 by lroux            ###   ########.fr       */
+/*   Created: 2019/03/20 19:21:00 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/20 19:23:58 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "lift/string.h"
 
-char	*ft_strtrim(const char *s, int (*check)(int))
+int	ft_strncc(const char *s, size_t size, char c)
 {
-	char *end;
+	int count;
 
 	if (!s)
-		return (NULL);
-	while (check(*s))
-		++s;
-	if (!*s)
-		return ((char*)s);
-	end = (char*)(s + ft_strlen(s) - 1);
-	while (check(*end))
-		end--;
-	end[1] = '\0';
-	return ((char*)s);
+		return (0);
+	count = 0;
+	while (*s && size--)
+		if (*s++ == c)
+			count++;
+	return (count);
 }

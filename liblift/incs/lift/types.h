@@ -44,4 +44,9 @@ typedef enum {
 	true = 1
 }	t_bool;
 
+typedef enum {
+	success = 0,
+	failure = 1
+}	t_status;
+
 #endif

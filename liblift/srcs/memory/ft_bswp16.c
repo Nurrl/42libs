@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcc.c                                         :+:      :+:    :+:   */
+/*   ft_bswp16.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/18 19:53:50 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/20 19:20:50 by lroux            ###   ########.fr       */
+/*   Created: 2019/04/05 18:24:03 by lroux             #+#    #+#             */
+/*   Updated: 2019/04/05 18:26:55 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcc(const char *s, char c)
-{
-	int count;
+#include "lift/types.h"
+#include "lift/memory.h"
 
-	if (!s)
-		return (0);
-	count = 0;
-	while (*s)
-		if (*s++ == c)
-			count++;
-	return (count);
+t_u16	ft_bswp16(t_u16 val)
+{
+	return (val << 8) | (val >> 8);
 }
