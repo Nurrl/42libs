@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float.c                                            :+:      :+:    :+:   */
+/*   ft_bswp32.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/29 15:25:48 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:48:42 by lroux            ###   ########.fr       */
+/*   Created: 2019/04/05 18:27:03 by lroux             #+#    #+#             */
+/*   Updated: 2019/04/05 18:27:16 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libpf.intern.h"
+#include "lift/types.h"
+#include "lift/memory.h"
 
-void		pfhandlefloat(t_arg *arg, t_flag *flag)
+t_u32	ft_bswp32(t_u32 val)
 {
-	flag->precision = (flag->precision == -1) ? 6 : flag->precision;
-	flag->finished = pfdtostr(arg->f,
-			flag->precision, (flag->flags & FLAGALTER) ? 1 : 0);
+	val = ((val << 8) & 0xFF00FF00) | ((val >> 8) & 0xFF00FF);
+	return (val << 16) | (val >> 16);
 }

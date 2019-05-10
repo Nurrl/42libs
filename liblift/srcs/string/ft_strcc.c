@@ -6,11 +6,11 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/18 19:53:50 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 17:50:16 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/20 19:20:50 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int				ft_strcc(const char *s, char c)
+int	ft_strcc(const char *s, char c)
 {
 	int count;
 

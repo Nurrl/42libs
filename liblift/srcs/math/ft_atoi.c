@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 12:01:45 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:34:02 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 22:24:15 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int		ft_atoi(const char *str)
 {
-	t_uint64	num;
-	t_bool		negative;
+	t_u64	num;
+	t_bool	negative;
 
 	while (*str == ' ' || *str == '\t' || *str == '\v' || *str == '\f'
 			|| *str == '\r' || *str == '\n')

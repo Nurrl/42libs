@@ -1,0 +1,149 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   special.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/11/27 18:34:40 by lroux             #+#    #+#             */
+/*   Updated: 2019/04/02 21:42:02 by lroux            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libpf.intern.h"
+
+static const t_subs g_subs[128] = {
+	{"black", "\x1b[30m"},
+	{"red", "\x1b[31m"},
+	{"green", "\x1b[32m"},
+	{"yellow", "\x1b[33m"},
+	{"blue", "\x1b[34m"},
+	{"magenta", "\x1b[35m"},
+	{"cyan", "\x1b[36m"},
+	{"white", "\x1b[37m"},
+
+	{"lightblack", "\x1b[90m"},
+	{"lightred", "\x1b[91m"},
+	{"lightgreen", "\x1b[92m"},
+	{"lightyellow", "\x1b[93m"},
+	{"lightblue", "\x1b[94m"},
+	{"lightmagenta", "\x1b[95m"},
+	{"lightcyan", "\x1b[96m"},
+	{"lightwhite", "\x1b[97m"},
+
+	{"bold", "\x1b[1m"},
+	{"under", "\x1b[4m"},
+	{"rev", "\x1b[7m"},
+
+	{"eoc", "\x1b[0m"},
+	{"blank", "\x1b[2J"},
+
+	{"home", "\x1b[H"},
+	{"up", "\x1b[A"},
+	{"down", "\x1b[B"},
+	{"right", "\x1b[C"},
+	{"left", "\x1b[D"},
+
+	{"flip", "(╯°□°）╯︵ ┻━┻"},
+	{"tidy", "┬─┬⃰͡`(ᵔᵕᵔ͜ )"},
+	{"shrug", "¯\\_(ツ)_/¯"},
+	{"42",
+		"██╗  ██╗██████╗ \n"
+		"██║  ██║╚════██╗\n"
+		"███████║ █████╔╝\n"
+		"╚════██║██╔═══╝ \n"
+		"     ██║███████╗\n"
+		"     ╚═╝╚══════╝"},
+	{"doge",
+		"         ▄              ▄    \n"
+		"        ▌▒█           ▄▀▒▌   \n"
+		"        ▌▒▒█        ▄▀▒▒▒▐   \n"
+		"       ▐▄▀▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐   \n"
+		"     ▄▄▀▒░▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐   \n"
+		"   ▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌   \n"
+		"  ▐▒▒▒▄▄▒▒▒▒░░░▒▒▒▒▒▒▒▀▄▒▒▌  \n"
+		"  ▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐  \n"
+		" ▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌ \n"
+		" ▌░▒▄██▄▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌ \n"
+		"▐▒▀▐▄█▄█▌▄░▀▒▒░░░░░░░░░░▒▒▒▐ \n"
+		"▐▒▒▐▀▐▀▒░▄▄▒▄▒▒▒▒▒▒░▒░▒░▒▒▒▒▌\n"
+		"▐▒▒▒▀▀▄▄▒▒▒▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▐ \n"
+		" ▌▒▒▒▒▒▒▀▀▀▒▒▒▒▒▒░▒░▒░▒░▒▒▒▌ \n"
+		" ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▄▒▒▐  \n"
+		"  ▀▄▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▄▒▒▒▒▌  \n"
+		"    ▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀   \n"
+		"      ▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀     \n"
+		"         ▒▒▒▒▒▒▒▒▒▒▀▀        \n"
+	},
+	{NULL, NULL}
+};
+
+static t_bool	colorrgb(t_pf *env, char *key)
+{
+	key += 6;
+	if (!*key)
+		return (false);
+	pfstore(env, "\x1b[38;2;", 7);
+	pfstore(env, key, ft_strlen(key));
+	pfstore(env, "m", 1);
+	return (true);
+}
+
+static t_bool	color256(t_pf *env, char *key)
+{
+	key += 6;
+	if (!*key || !ft_stris(key, &ft_isdigit))
+		return (false);
+	pfstore(env, "\x1b[38;5;", 7);
+	pfstore(env, key, ft_strlen(key));
+	pfstore(env, "m", 1);
+	return (true);
+}
+
+static t_bool	subs(t_pf *env, char *key)
+{
+	int i;
+
+	i = -1;
+	while (g_subs[++i].key)
+		if (ft_strequ(g_subs[i].key, key))
+			break ;
+	if (!g_subs[i].key)
+		return (false);
+	pfstore(env, g_subs[i].value,
+			ft_strlen(g_subs[i].value));
+	return (true);
+}
+
+static t_bool	dosubstitute(t_pf *env, char *key, va_list ap)
+{
+	(void)ap;
+	if (ft_strnequ(key, "color;", 6))
+	{
+		if (ft_strcc(key, ';') == 3)
+			return (colorrgb(env, key));
+		else
+			return (color256(env, key));
+	}
+	else
+		return (subs(env, key));
+}
+
+void			pfspecial(t_pf *env, char **format, va_list ap)
+{
+	char	*start;
+	char	*key;
+
+	start = *format;
+	key = NULL;
+	while (**format && **format != '}')
+		(*format)++;
+	if (!**format || !(key = ft_strndup(start + 1, *format - start - 1))
+			|| !dosubstitute(env, key, ap))
+	{
+		*format = start;
+		pfstore(env, *format, 1);
+	}
+	(*format)++;
+	free(key);
+}

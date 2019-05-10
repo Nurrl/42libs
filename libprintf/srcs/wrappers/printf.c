@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   int.c                                              :+:      :+:    :+:   */
+/*   printf.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 14:42:49 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:44:50 by lroux            ###   ########.fr       */
+/*   Created: 2018/11/24 11:48:40 by lroux             #+#    #+#             */
+/*   Updated: 2019/04/02 00:11:49 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libpf.intern.h"
 
-void		pfhandleint(t_arg *arg, t_flag *flag)
+int			ft_printf(const char *format, ...)
 {
-	flag->finished = pfitostr(arg->l, 10, flag);
+	va_list	ap;
+	int		rt;
+
+	va_start(ap, format);
+	rt = ft_vprintf(format, ap);
+	va_end(ap);
+	return (rt);
 }
 
-void		pfhandleuint(t_arg *arg, t_flag *flag)
+int			ft_vprintf(const char *format, va_list ap)
 {
-	t_uint64 nb;
-
-	nb = arg->l;
-	if (nb == 0 && flag->precision == 0)
-	{
-		flag->finished = ft_strdup("");
-		return ;
-	}
-	flag->finished = pfutostr(nb, 10, flag->precision);
+	return (ft_vdprintf(stdout, format, ap));
 }

@@ -8,21 +8,7 @@ ifndef MODULE
     $(error You cannot include this file alone)
 endif
 
-CC		:= gcc
-
-LD		:= gcc
-AR		:= ar
-
-RM		:= rm -f
-MAKE	:= make --no-print-directory
-LN		:= ln -sf
-
-SHELL	:= /bin/bash
-
-define \n
-
-
-endef
+include $(LIBDIR)/defines.mk
 
 # ###
 # II - Variables and flags
@@ -102,44 +88,15 @@ CFLAGS	+= $(addprefix -I, $(INCS))
 MAKE	+= $(MKVARS)
 
 # ###
-# III - Formats and output
-# ###
-_END	:= $(shell echo -ne "\x1b[0m")
-_BOLD	:= $(shell echo -ne "\x1b[1m")
-_UNDER	:= $(shell echo -ne "\x1b[4m")
-_REV	:= $(shell echo -ne "\x1b[7m")
-
-# Colors.
-_GREY	:= $(shell echo -ne "\x1b[30m")
-_RED	:= $(shell echo -ne "\x1b[31m")
-_GREEN	:= $(shell echo -ne "\x1b[32m")
-_BLUE	:= $(shell echo -ne "\x1b[34m")
-_CYAN	:= $(shell echo -ne "\x1b[36m")
-_WHITE	:= $(shell echo -ne "\x1b[37m")
-
-# Inverted, i.e. colored backgrounds.
-_IGREY	:= $(shell echo -ne "\x1b[40m")
-_IRED	:= $(shell echo -ne "\x1b[41m")
-_IGREEN	:= $(shell echo -ne "\x1b[42m")
-_IBLUE	:= $(shell echo -ne "\x1b[44m")
-_ICYAN	:= $(shell echo -ne "\x1b[46m")
-_IWHITE	:= $(shell echo -ne "\x1b[47m")
-
-# Custom format variables.
-_BLANK	:= @perl -e \
-				"print \"\r\"; print \" \"x$(shell tput cols); print \"\r\""
-_HEAD	:= $(shell echo -ne "$(_BOLD)$(PROJECT):$(_END) ")
-
-# ###
-# VI - Targets
+# III - Targets
 # ###
 ifeq ($(MODULE), project.mk)
-all: $(LIBS) $(NAME)
+all: $(LIBS) $(NAME) $(LNKNAME)
 
 $(LIBS):
 	@$(MAKE) -s --directory $(LIBDIR)/$@
 else
-all: $(NAME)
+all: $(NAME) $(LNKNAME)
 endif
 
 ifneq (, $(shell which norminette))
@@ -148,6 +105,12 @@ norm:
 		| grep -v 'Not a valid file' | grep -E 'Warning|Error' -B 1 || true
 
 .PHONY: norm
+endif
+
+ifdef LNKNAME
+$(LNKNAME): $(NAME)
+	@$(LN) $(NAME) $(LNKNAME)
+	@echo " $(_CYAN)⬅$(_END) $(LNKNAME)"
 endif
 
 $(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)

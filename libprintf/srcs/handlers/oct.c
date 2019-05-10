@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                       :+:      :+:    :+:   */
+/*   oct.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 16:59:44 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/26 21:30:38 by lroux            ###   ########.fr       */
+/*   Created: 2018/12/05 14:40:13 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/03 21:36:54 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lift/memory.h"
-#include <stdlib.h>
+#include "libpf.intern.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+t_ret	pfhandleoct(t_arg *arg, t_flag flag)
 {
-	size_t initlen;
+	static char	num[MAXPRECISION + 1];
+	t_ret		ret;
 
-	if (dst < src)
-	{
-		initlen = len;
-		while (len--)
-			((unsigned char*)dst)[initlen - len - 1] = (
-				(unsigned char*)src)[initlen - len - 1];
-	}
-	else
-		while (len--)
-			((unsigned char*)dst)[len] = ((unsigned char*)src)[len];
-	return (dst);
+	ft_strcpy(ret.leading, "");
+	ft_utostrb(num, arg->l, 8, ft_min(MAXPRECISION, flag.precision));
+	ret.str = (!arg->l && flag.precision == 0) ? "" : num;
+	if (flag.flags & FLAGALTER)
+		ft_strcpy(ret.leading, "0");
+	ret.size = ft_strlen(ret.str);
+	return (ret);
 }

@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_bswp16.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 17:27:06 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/02 22:27:29 by lroux            ###   ########.fr       */
+/*   Created: 2019/04/05 18:24:03 by lroux             #+#    #+#             */
+/*   Updated: 2019/04/05 18:26:55 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lift/memory.h"
 #include "lift/types.h"
-#include <stdlib.h>
+#include "lift/memory.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+t_u16	ft_bswp16(t_u16 val)
 {
-	while (n--)
-		if (*(t_u8*)s1++ != *(t_u8*)s2++)
-			return (*(t_u8*)(s1 - 1) - *(t_u8*)(s2 - 1));
-	return (0);
+	return (val << 8) | (val >> 8);
 }

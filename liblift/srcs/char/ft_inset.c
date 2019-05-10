@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ft_inset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 17:27:06 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/02 22:27:29 by lroux            ###   ########.fr       */
+/*   Created: 2019/03/16 15:35:18 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/16 15:46:27 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lift/memory.h"
-#include "lift/types.h"
-#include <stdlib.h>
-
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+int	ft_inset(int c, const char *charset)
 {
-	while (n--)
-		if (*(t_u8*)s1++ != *(t_u8*)s2++)
-			return (*(t_u8*)(s1 - 1) - *(t_u8*)(s2 - 1));
+	while (*charset)
+		if (c == *(charset++))
+			return (1);
 	return (0);
 }

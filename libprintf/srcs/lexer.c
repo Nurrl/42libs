@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/02 13:15:05 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/14 04:31:49 by glodi            ###   ########.fr       */
+/*   Updated: 2019/03/03 18:08:47 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	pflexparam(t_flag *flag, char **format)
 
 	flag->param = -1;
 	if ((dum = ft_strchr(*format, '$'))
-			&& ft_strisndigit(*format, dum - *format))
+			&& ft_strisn(*format, dum - *format, &ft_isdigit))
 		flag->param = ft_atoi(*format);
 	if (flag->param != -1)
 		*format = dum + 1;
@@ -53,7 +53,7 @@ void	pflexwidth(t_flag *flag, char **format, va_list ap)
 	char *dum;
 
 	if ((dum = ft_strchr(*format, '*'))
-			&& ft_strisndigit(*format, dum - *format))
+			&& ft_strisn(*format, dum - *format, &ft_isdigit))
 	{
 		*format = dum;
 		flag->width = va_arg(ap, int);
@@ -98,26 +98,22 @@ void	pflexprecision(t_flag *flag, char **format, va_list ap)
 		flag->precision = 0;
 }
 
-int		pflexlandt(t_flag *flag, char **format)
+t_bool	pflexlandt(t_flag *flag, char **format)
 {
 	char *dum;
 
 	dum = *format;
-	while (**format == 'l' || **format == 'h' || **format == 'L'
+	while ((**format == 'l' || **format == 'h' || **format == 'L'
 			|| **format == 'j' || **format == 'z' || **format == 't')
+			&& !pfisvalid(**format))
 	{
 		if (!**format)
-			return (PF_ERR);
-		if (pfisvalid(**format))
-			break ;
+			return (false);
 		++(*format);
 	}
-	if (!**format)
-		return (PF_ERR);
+	if (!**format || !pfisvalid(**format))
+		return (false);
 	flag->type = **format;
-	flag->length = (*format == dum)
-		? NULL
-		: ft_strndup(dum, *format - dum);
-	(*format)++;
-	return (PF_KEK);
+	pfflaglen(flag, dum, format);
+	return (true);
 }

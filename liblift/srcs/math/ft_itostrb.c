@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itostr.c                                        :+:      :+:    :+:   */
+/*   ft_itostrb.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 12:34:35 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/02 15:28:45 by lroux            ###   ########.fr       */
+/*   Updated: 2019/03/03 22:05:36 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,27 @@
 #include "lift/types.h"
 #include "lift/string.h"
 
-char	*ft_itostr(long long num, int base)
+#include <stdio.h>
+
+void	ft_itostrb(char *buf, long long num, int base, int precision)
 {
-	char	*fresh;
 	int		index;
 	t_bool	invert;
 
 	invert = (num < 0) ? true : false;
-	index = ft_intlen(num, base) - 1;
-	if (!(fresh = ft_strnew(index + 1)))
-		return (NULL);
+	index = ((precision == -1 || ft_intlen(num, base) > precision)
+		? ft_intlen(num, base)
+		: precision) - 1;
+	if (precision != -1)
+		index += invert;
+	buf[index + 1] = 0;
 	while (1)
 	{
-		fresh[index--] = BASE36[(invert) ? -(num % base) : (num % base)];
+		buf[index--] = BASE36[(invert) ? -(num % base) : (num % base)];
 		num = num / base;
-		if (!num || index < 0)
+		if (index < (int)invert)
 			break ;
 	}
 	if (invert)
-		fresh[0] = '-';
-	return (fresh);
+		buf[0] = '-';
 }

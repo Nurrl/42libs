@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcmp.c                                        :+:      :+:    :+:   */
+/*   ll_shift.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/06 17:27:06 by lroux             #+#    #+#             */
-/*   Updated: 2019/04/02 22:27:29 by lroux            ###   ########.fr       */
+/*   Created: 2019/03/23 14:59:28 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/23 15:05:19 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lift/memory.h"
-#include "lift/types.h"
-#include <stdlib.h>
+#include "lift/list.h"
 
-int		ft_memcmp(const void *s1, const void *s2, size_t n)
+void	ll_shift(t_node **head, int offset)
 {
-	while (n--)
-		if (*(t_u8*)s1++ != *(t_u8*)s2++)
-			return (*(t_u8*)(s1 - 1) - *(t_u8*)(s2 - 1));
-	return (0);
+	*head = ll_get(*head, offset);
 }

@@ -6,7 +6,7 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 10:49:55 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/21 15:02:58 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/11 20:00:49 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,25 @@
 /*
 ** Types & macros
 */
-# define PF_ERR 0
-# define PF_KEK 1
-
 # define FLAGALTER  0x1
 # define FLAGMINUS  0x2
 # define FLAGPLUS   0x4
 # define FLAGBLANK  0x8
 # define FLAGZERO   0x10
+
+# define BARE  0
+# define LPRE  1
+# define LLPRE 2
+# define HPRE  3
+# define HHPRE 4
+# define BLPRE 5
+# define ZPRE  6
+# define JPRE  7
+# define MAX   8
+
+# define MAXPRECISION 2048
+
+# define BUFSIZE 4096
 
 /*
 ** Printf substitutions(Bonus)
@@ -39,26 +50,40 @@
 ** Special flags where the content is being replaced
 ** by a specific constant value.
 */
-typedef struct	s_psubst {
+typedef struct	s_subs {
 	char	*key;
 	char	*value;
-}				t_psubst;
+}				t_subs;
+
+typedef struct	s_pf {
+	int		count;
+
+	int		(*flush)(char *buf, size_t size);
+
+	char	*buf;
+	size_t	size;
+}				t_pf;
+
+typedef struct	s_float {
+	t_u64	frac:	63;
+	t_byte	integ:	1;
+	t_u16	exp:	15;
+	t_byte	sign:	1;
+}				t_float;
 
 /*
 ** Internal functions
 */
 
-t_flag			*pfsubstr(char **format, t_flag *flag);
-t_flag			*pflexer(char **format, va_list ap, t_flag *flag);
-int				pfcall(t_flag *flag, va_list ap);
-int				pfisvalid(char type);
+void			pfstart(t_pf *env, char *format, va_list ap);
+void			pfstore(t_pf *env, const char *s, size_t size);
+void			pfstoremove(t_pf *env, char **s, size_t size);
 
-int				pfappend(char **ret, int *count, t_flag flag, t_bool freeit);
-int				pfprepend(char *toprepend, char **s, t_bool freeit);
+void			pfspecial(t_pf *env, char **format, va_list ap);
+void			pfflag(t_pf *env, char **format, va_list ap);
 
-char			*pfdtostr(long double nb, int precision, t_bool point);
-char			*pfitostr(long long num, int base, t_flag *flag);
-char			*pfutostr(unsigned long long num, int base, int precision);
+t_bool			pfisvalid(char type);
+t_ret			pfcall(t_flag flag, t_arg *arg, va_list ap);
 
 /*
 ** Lexer functions
@@ -68,24 +93,25 @@ void			pflexparam(t_flag *flag, char **format);
 void			pflexflags(t_flag *flag, char **format);
 void			pflexwidth(t_flag *flag, char **format, va_list ap);
 void			pflexprecision(t_flag *flag, char **format, va_list ap);
-int				pflexlandt(t_flag *flag, char **format);
+t_bool			pflexlandt(t_flag *flag, char **format);
+void			pfflaglen(t_flag *flag, char *dum, char **format);
 
 /*
 ** Param to char* converters
 */
 
-void			pfhandlechar(t_arg *arg, t_flag *flag);
-void			pfhandlestr(t_arg *arg, t_flag *flag);
-void			pfhandleptr(t_arg *arg, t_flag *flag);
+t_ret			pfhandlechar(t_arg *arg, t_flag flag);
+t_ret			pfhandlestr(t_arg *arg, t_flag flag);
+t_ret			pfhandleptr(t_arg *arg, t_flag flag);
 
-void			pfhandleint(t_arg *arg, t_flag *flag);
-void			pfhandleuint(t_arg *arg, t_flag *flag);
-void			pfhandlefloat(t_arg *arg, t_flag *flag);
-void			pfhandleoct(t_arg *arg, t_flag *flag);
-void			pfhandlehex(t_arg *arg, t_flag *flag);
-void			pfhandlehexup(t_arg *arg, t_flag *flag);
+t_ret			pfhandleint(t_arg *arg, t_flag flag);
+t_ret			pfhandleuint(t_arg *arg, t_flag flag);
+t_ret			pfhandlefloat(t_arg *arg, t_flag flag);
+t_ret			pfhandleoct(t_arg *arg, t_flag flag);
+t_ret			pfhandlehex(t_arg *arg, t_flag flag);
+t_ret			pfhandlehexup(t_arg *arg, t_flag flag);
 
-void			pfhandlebin(t_arg *arg, t_flag *flag);
-void			pfhandlenonprint(t_arg *arg, t_flag *flag);
+t_ret			pfhandlebin(t_arg *arg, t_flag flag);
+t_ret			pfhandleserr(t_arg *arg, t_flag flag);
 
 #endif

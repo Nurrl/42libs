@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 06:08:16 by lroux             #+#    #+#             */
-/*   Updated: 2019/02/19 16:37:41 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/05 18:30:14 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIFT_MEMORY_H
 
 # include <stdlib.h>
+# include "lift/types.h"
 
 /*
 **  _ _ _     _ _  __ _
@@ -42,5 +43,8 @@ void			ft_memdel(void **ap);
 void			*ft_calloc(size_t count, size_t size);
 void			*ft_realloc(void *ptr, size_t size);
 void			**ft_mk2array(int x, int y, size_t size);
+
+t_u16			ft_bswp16(t_u16 val);
+t_u32			ft_bswp32(t_u32 val);
 
 #endif

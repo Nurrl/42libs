@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ptr.c                                              :+:      :+:    :+:   */
+/*   ft_utostrb.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 14:48:06 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 14:48:25 by lroux            ###   ########.fr       */
+/*   Created: 2018/11/12 12:34:35 by lroux             #+#    #+#             */
+/*   Updated: 2019/03/03 21:47:38 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libpf.intern.h"
+#include "lift/math.h"
+#include "lift/string.h"
 
-void		pfhandleptr(t_arg *arg, t_flag *flag)
+#include <stdio.h>
+
+void	ft_utostrb(char *buf, unsigned long long num,
+			int base, int precision)
 {
-	char *num;
+	int		index;
 
-	if (!arg->l && flag->precision == 0)
+	index = ((precision == -1 || ft_uintlen(num, base) > precision)
+		? ft_uintlen(num, base)
+		: precision) - 1;
+	buf[index + 1] = 0;
+	while (1)
 	{
-		flag->finished = ft_strdup("0x");
-		return ;
+		buf[index--] = BASE36[(num % base)];
+		num = num / base;
+		if (index < 0)
+			break ;
 	}
-	if (!(num = pfutostr(arg->l, 16, flag->precision)))
-		return ;
-	pfprepend("0x", &num, false);
-	flag->finished = num;
 }

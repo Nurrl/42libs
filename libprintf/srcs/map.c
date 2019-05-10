@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   testi.c                                            :+:      :+:    :+:   */
+/*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/04 20:18:44 by lroux             #+#    #+#             */
-/*   Updated: 2018/12/05 17:02:42 by lroux            ###   ########.fr       */
+/*   Updated: 2019/04/02 00:38:28 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libpf.intern.h"
-
-#define BARE  0
-#define LPRE  1
-#define LLPRE 2
-#define HPRE  3
-#define HHPRE 4
-#define BLPRE 5
-#define ZPRE  6
-#define JPRE  7
-#define MAX   8
 
 /*
 ** I - Handlers
@@ -39,7 +29,7 @@ static t_handler g_handlers['z' - '@' + 1] = {
 	[('p' - '@')] = &pfhandleptr,
 
 	[('b' - '@')] = &pfhandlebin,
-	[('r' - '@')] = &pfhandlenonprint,
+	[('m' - '@')] = &pfhandleserr,
 };
 
 /*
@@ -59,7 +49,7 @@ static unsigned char	g_types[MAX]['z' - '@' + 1] = {
 		[('p' - '@')] = UIPTR,
 
 		[('b' - '@')] = UINT,
-		[('r' - '@')] = PTR,
+		[('m' - '@')] = INT,
 	},
 /*
 ** 1: l-prefixed
@@ -76,7 +66,6 @@ static unsigned char	g_types[MAX]['z' - '@' + 1] = {
 		[('s' - '@')] = PTR,
 
 		[('b' - '@')] = ULONG,
-		[('r' - '@')] = PTR,
 	},
 /*
 ** 2: ll-prefixed
@@ -201,43 +190,21 @@ static void			pfpop(t_arg *arg, int type, va_list ap)
 		pfpopunsigned(arg, type, ap);
 }
 
-int					pfcall(t_flag *flag, va_list ap)
+t_ret				pfcall(t_flag flag, t_arg *arg, va_list ap)
 {
-	t_arg arg;
-
-	if (!g_handlers[flag->type - '@'])
-		return (-1);
-	if (!flag->length)
-		pfpop(&arg, g_types[BARE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'l' && flag->length[1] == 'l')
-		pfpop(&arg, g_types[LLPRE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'h' && flag->length[1] == 'h')
-		pfpop(&arg, g_types[HHPRE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'l')
-		pfpop(&arg, g_types[LPRE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'h')
-		pfpop(&arg, g_types[HPRE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'L')
-		pfpop(&arg, g_types[BLPRE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'z' || flag->length[0] == 't')
-		pfpop(&arg, g_types[ZPRE][flag->type - '@'], ap);
-	else if (flag->length[0] == 'j')
-		pfpop(&arg, g_types[JPRE][flag->type - '@'], ap);
+	if (g_types[flag.length][flag.type - '@'] == UNSET)
+		pfpop(arg, g_types[BARE][flag.type - '@'], ap);
 	else
-		pfpop(&arg, g_types[BARE][flag->type - '@'], ap);
-	g_handlers[flag->type - '@'](&arg, flag);
-	return (0);
+		pfpop(arg, g_types[flag.length][flag.type - '@'], ap);
+	return (g_handlers[flag.type - '@'](arg, flag));
 }
 
-int					pfisvalid(char type)
+t_bool				pfisvalid(char type)
 {
-	return (!!g_handlers[type - '@']);
+	return ((type - '@' > -1) && !!g_handlers[type - '@']);
 }
 
-void				ft_pfregister(
-		char type,
-		t_handler handler,
-		int length)
+void				ft_pfreg(char type, t_handler handler, int length)
 {
 	if (type - '@' > 'z' - '@' + 1 || !handler)
 		return ;
