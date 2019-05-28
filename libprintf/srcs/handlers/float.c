@@ -6,11 +6,12 @@
 /*   By: lroux <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 15:25:48 by lroux             #+#    #+#             */
-/*   Updated: 2019/05/10 11:58:56 by lroux            ###   ########.fr       */
+/*   Updated: 2019/05/28 14:07:58 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libpf.intern.h"
+#include <lift/math.h>
 
 /*
 ** `Infinity` => `exponent` (0xFF for 32-bit floats or 0x7FF for 64-bit doubles
@@ -31,10 +32,6 @@
 ** - https://www.geeksforgeeks.org/bit-fields-c/
 */
 
-static void	processfloat(void)
-{
-}
-
 t_ret		pfhandlefloat(t_arg *arg, t_flag flag)
 {
 	static char	num[MAXPRECISION + 1];
@@ -42,8 +39,8 @@ t_ret		pfhandlefloat(t_arg *arg, t_flag flag)
 	t_float		*flot;
 
 	flot = (t_float*)&arg->f;
-	ft_strcpy(ret.leading, "");
 	ret.str = NULL;
+	ft_strcpy(ret.leading, "");
 	if (flot->sign)
 		ft_strcpy(ret.leading, "-");
 	if (flot->exp == 0x7FFF && flot->frac == 0)
@@ -53,7 +50,7 @@ t_ret		pfhandlefloat(t_arg *arg, t_flag flag)
 	if (flag.precision == -1)
 		flag.precision = 6;
 	if (!ret.str)
-		processfloat();
+		ft_strcpy(num, "0.000000");
 	if (!ret.str)
 		ret.str = num;
 	ret.size = ft_strlen(ret.str);
