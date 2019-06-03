@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 15:32:09 by lroux             #+#    #+#             */
-/*   Updated: 2019/03/23 14:58:14 by lroux            ###   ########.fr       */
+/*   Updated: 2019/06/03 16:46:16 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ t_node			*ll_get(t_node *head, int id);
 void			*ll_pop(t_node **head, int id);
 
 void			ll_shift(t_node **head, int offset);
-
 size_t			ll_len(t_node *head);
 t_bool			ll_del(t_node **head);
+void			ll_swap(t_node *a, t_node *b);
 
 #endif
