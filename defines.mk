@@ -12,6 +12,7 @@ LN		:= cp
 
 SHELL	:= /bin/bash
 
+# Styles.
 _END	:= $(shell echo -ne "\x1b[0m")
 _BOLD	:= $(shell echo -ne "\x1b[1m")
 _UNDER	:= $(shell echo -ne "\x1b[4m")
@@ -37,6 +38,10 @@ _IWHITE	:= $(shell echo -ne "\x1b[47m")
 _BLANK	:= @perl -e \
 				"print \"\r\"; print \" \"x$(shell tput cols); print \"\r\""
 _HEAD	:= $(shell echo -ne "$(_BOLD)$(PROJECT):$(_END) ")
+
+# Status.
+_SUCCS	:= $(shell echo -ne "$(_GREEN)✔$(_END)")
+_FAILR	:= $(shell echo -ne "$(_RED)✘$(_END)")
 
 define \n
 

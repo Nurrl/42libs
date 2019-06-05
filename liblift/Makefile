@@ -6,11 +6,11 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/06/03 16:49:08 by lroux            ###   ########.fr        #
+#    Updated: 2019/06/05 16:39:33 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= "\<\> liblift :"
+PROJECT	:= "▶ liblift :"
 EX		:= liblift
 NAME	:= build/$(EX).a
 LNKNAME	:= $(EX).a

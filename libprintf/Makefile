@@ -6,11 +6,11 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/04/11 20:26:57 by lroux            ###   ########.fr        #
+#    Updated: 2019/06/05 16:39:06 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-PROJECT	:= "\<\> libprintf :"
+PROJECT	:= "▶ libprintf :"
 EX		:= libprintf
 NAME	:= build/$(EX).a
 LNKNAME	:= $(EX).a
