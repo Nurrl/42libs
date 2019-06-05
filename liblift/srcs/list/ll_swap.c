@@ -6,7 +6,7 @@
 /*   By: lroux <lroux@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 16:47:39 by lroux             #+#    #+#             */
-/*   Updated: 2019/06/03 16:48:48 by lroux            ###   ########.fr       */
+/*   Updated: 2019/06/05 03:00:03 by lroux            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	ll_swap(t_node *a, t_node *b)
 {
 	void	*data;
 
+	if (a->data == b->data)
+		return ;
 	data = a->data;
 	a->data = b->data;
 	b->data = data;
