@@ -79,7 +79,7 @@ endif
 
 CFLAGS	?= -Wall -Wextra -Werror
 ifeq ($(DEBUG), 1)
-	CFLAGS	:= $(filter-out -Werror,$(CFLAGS)) -g3
+	CFLAGS	:= $(filter-out -Werror,$(CFLAGS)) -g3 -D DEBUG
 	MKVARS	+= DEBUG=$(DEBUG)
 else
 	CFLAGS	+= -Ofast
@@ -90,14 +90,7 @@ MAKE	+= $(MKVARS)
 # ###
 # III - Targets
 # ###
-ifeq ($(MODULE), project.mk)
-all: $(LIBS) $(NAME) $(LNKNAME)
-
-$(LIBS):
-	@$(MAKE) -s --directory $(LIBDIR)/$@
-else
 all: $(NAME) $(LNKNAME)
-endif
 
 ifneq (, $(shell which norminette))
 norm:
