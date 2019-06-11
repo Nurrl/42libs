@@ -7,8 +7,11 @@ LD		:= gcc
 AR		:= ar
 
 RM		:= rm -f
-MAKE	:= make --no-print-directory
+MAKE	:= make
 LN		:= cp
+
+MAKEFLAGS \
+		:= --no-print-directory
 
 SHELL	:= /bin/bash
 

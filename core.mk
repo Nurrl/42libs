@@ -54,7 +54,7 @@ ifdef LIBS
     )
 
     LIBSPATH	:= $(addprefix $(LIBDIR)/, $(LIBS))
-    $(foreach lib, $(LIBS), $(eval LIBFILES += $(LIBDIR)/$(lib)/$(lib).a))
+    $(foreach lib, $(LIBS), $(eval LIBSFILES += $(LIBDIR)/$(lib)/$(lib).a))
 
     # Includes for external libaries
     $(foreach lib, $(LIBSPATH), $(eval \
@@ -66,14 +66,14 @@ ifdef LIBS
     ))
 
     # Linker flags
-    LDFLAGS		+= $(addprefix -L$(LIBDIR)/, $(LIBS))
+    LDLIBS		+= $(addprefix -L$(LIBDIR)/, $(LIBS))
     ifneq ($(shell uname -s),Darwin)
-        LDFLAGS	+= -Wl,--start-group
+        LDLIBS	+= -Wl,--start-group
     endif
-    LDFLAGS		+= $(addprefix -l, $(patsubst lib%, %, $(LIBS)))
-    LDFLAGS		+= $(addprefix -l, $(patsubst lib%, %, $(SLIBS)))
+    LDLIBS		+= $(addprefix -l, $(patsubst lib%, %, $(LIBS)))
+    LDLIBS		+= $(addprefix -l, $(patsubst lib%, %, $(SLIBS)))
     ifneq ($(shell uname -s),Darwin)
-        LDFLAGS	+= -Wl,--end-group
+        LDLIBS	+= -Wl,--end-group
     endif
 endif
 
@@ -106,7 +106,7 @@ $(LNKNAME): $(NAME)
 	@echo " $(_CYAN)⬅$(_END) $(LNKNAME)"
 endif
 
-$(OBJS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(DEPS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(DEPS)
 	@[ ! -d $(shell dirname $@) ] && mkdir -p $(shell dirname $@) || true
 	@$(CC) $(CFLAGS) -c $< -o $@
 	$(_BLANK)
@@ -133,7 +133,10 @@ endif
 
 fclean: clean eclean
 
+show-deps:
+	@echo "$(DEPS) $(SRCS)"
+
 re: fclean all
 
-.PHONY: all clean eclean fclean re
+.PHONY: all clean eclean fclean show-deps re
 
