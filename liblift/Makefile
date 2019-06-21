@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/06/05 16:39:33 by lroux            ###   ########.fr        #
+#    Updated: 2019/06/18 14:53:57 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,8 @@ SRCS	:= \
 			char/ft_isupper.c \
 			char/ft_tolower.c \
 			char/ft_toupper.c \
+		   \
+			argp/ft_argp.c \
 		   \
 			io/gnl.c \
 		   \
@@ -114,6 +116,8 @@ SRCS	:= \
 
 LIBS	:=
 LIBDIR	:= ..
+
+#DEBUG	:= 1
 
 # Include core
 include ../lib.mk
