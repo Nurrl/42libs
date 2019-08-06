@@ -2,19 +2,18 @@
 include $(shell dirname $(lastword $(MAKEFILE_LIST)))/core.mk
 
 # Getting dependencies for subsequent libraries
-ifneq ($(shell uname -s),Darwin)
 $(foreach libfile, $(LIBSFILES), \
 	$(eval LIBSDEPS.$(notdir $(libfile)) := \
 		$(addprefix $(dir $(libfile)), \
-			$(shell $(MAKE) -sC $(dir $(libfile)) show-deps)))${\n} \
+			$(shell $(MAKE) -sC $(dir $(libfile)) show-deps))) \
 )
-endif
 
 # Creating dependency targets
 $(foreach libfile, $(LIBSFILES), \
 $(eval $(libfile): $(LIBSDEPS.$(notdir $(libfile)))) \
 )
 
+export DEBUG
 $(LIBSFILES):
 	@$(MAKE) -C $(dir $@)
 
