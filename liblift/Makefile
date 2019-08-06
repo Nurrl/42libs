@@ -6,7 +6,7 @@
 #    By: lroux <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 14:23:48 by lroux             #+#    #+#              #
-#    Updated: 2019/06/18 14:53:57 by lroux            ###   ########.fr        #
+#    Updated: 2019/08/06 17:10:28 by lroux            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRCS	:= \
 			list/ll_pop.c \
 			list/ll_shift.c \
 			list/ll_swap.c \
+			list/ll_qsort.c \
 		   \
 			math/ft_min.c \
 			math/ft_atoi.c \
